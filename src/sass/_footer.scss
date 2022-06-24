@@ -1,0 +1,24 @@
+.footer{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: $footer-bgc;
+  height: 70px;
+  min-width: 100%;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  &__copyright{
+    padding: 10px;
+    font-size: .75rem;
+    font-weight: 300;
+    a{
+      transition: .3s;
+      text-decoration: none;
+      color: white;
+      &:hover{
+        color: lightblue;
+      }
+    }
+  }
+}

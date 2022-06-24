@@ -1,0 +1,939 @@
+.weather-background-image{
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: bg .8s linear;
+  @keyframes bg {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 100%;
+    }
+  }
+}
+
+.weather-container{
+  width: 100%;
+  max-width: 2560px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.weather-city{
+  z-index: 1;
+  padding-left: 40px;
+  width: 100%;
+  display: flex;
+  align-self: flex-start;
+  color: $city-color;
+  font-size: 4.2rem;
+  word-break: normal;
+  word-wrap: break-word;
+  text-align: left;
+  text-shadow: $weather-text-shadow;
+  @include breakpointMax(md){
+    font-size: 3.5rem;
+  }
+  @include breakpointMax(sm){
+    padding-left: 20px;
+    font-size: 3.2rem;
+  }
+  @include breakpointMax(xs){
+    font-size: 2.2rem;
+  }
+  @include breakpointMax(xxxs){
+    padding-left: 10px;
+    font-size: 1.3rem;
+  }
+  .fi{
+    align-self: center;
+    margin: 0 10px; 
+    border-radius: 2px;
+    font-size: 1.9rem;
+    filter: brightness(90%);
+    @include breakpointMax(xs){
+      font-size: 1rem;
+    }
+  }
+  &__name{
+    max-width: 100%;
+    word-wrap: break-word;
+  }
+  &__country{
+    text-transform: uppercase;
+    font-size: 1.9rem;
+    align-self: center;
+    @include breakpointMax(xs){
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.actual-weather{
+  z-index: 1;
+  width: 50%;
+  border-radius: 4px;
+  display: flex;
+  justify-content: flex-start;
+  text-shadow: $weather-text-shadow;
+  margin-bottom: 45px;
+  @include breakpointMax(xl){
+    width: 65%;
+  }
+  @include breakpointMax(lg){
+    width: 100%;
+    padding: 0 40px;   
+  }
+  @include breakpointMax(md){
+    width: 100%;
+    flex-direction: column;
+  }
+  @include breakpointMax(sm){
+    padding: 0 20px; 
+  }
+  @include breakpointMax(xxxs){
+    padding: 0 10px; 
+  }
+  &__main-data{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 40px;
+    @include breakpointMax(lg){
+      padding-left: 0px;
+    }
+    @include breakpointMax(md){
+      margin-bottom: 20px;
+    }
+  }
+  
+  &__coordinates{
+    font-size: .8rem;
+    font-weight: 300;
+    color: $city-color;
+    align-self: start;
+    transform: translateY(-23px);
+    padding: 7px;
+    @include breakpointMax(xs){
+      transform: translateY(-5px);
+      padding: 0;
+      margin-bottom: 15px;
+    }
+    i{
+      transform: translateY(3px);
+      font-size: 1.2rem;
+    }
+    a{
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+  &__description{
+    align-self: flex-start;
+    font-size: 1.9rem;
+    color: $weather-text-color;
+    text-transform: capitalize;
+    @include breakpointMax(xs){
+      padding: 10px 0;
+      font-size: 1.5rem;
+    }
+    @include breakpointMax(xxs){
+      font-size: 1.3rem;
+    }
+  }
+  &__feels{
+    align-self: flex-start;
+    font-size: 1.2rem;
+    color: white;
+    @include breakpointMax(xs){
+      font-size: 1.1rem;
+    }
+    @include breakpointMax(xxxs){
+      font-size: 1rem;
+    }
+    i{
+      margin-right: 15px;
+    }
+  }
+  &__temp{
+    align-self: flex-start;
+    color: $weather-text-color;
+    font-size: 3.9rem;
+    @include breakpointMax(xs){
+      font-size: 3.3rem;
+    }
+    @include breakpointMax(xxs){
+      font-size: 3rem;
+    }
+    i{
+      margin-right: 15px;
+      font-size: 5rem;
+      @include breakpointMax(xs){
+        font-size: 3.7rem;
+      }
+      @include breakpointMax(xxs){
+        font-size: 3.6rem;
+      }
+    }
+  }
+  &__details{
+    align-self: flex-end;
+    width: 60%;
+    color: $weather-text-color;
+    font-size: 1.4rem;
+    text-align: left;
+    @include breakpointMax(lg){
+      align-self: flex-end;
+    }
+    @include breakpointMax(md){
+      align-self: flex-start;
+      width: 50%;
+    }
+    @include breakpointMax(sm){
+      align-self: flex-start;
+      width: 100%;
+      font-size: 1.3rem;
+    }
+    @include breakpointMax(xxxs){
+      font-size: 1.1rem;
+    }
+    .wi{
+      width: 50px;
+    }
+  }
+  &__details-parameters{
+    font-weight: 300;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__details-value{
+    font-weight: 200;
+  }
+}
+
+.short-term-forecast{
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  background-color: $weather-transparent-bgc;
+  display: flex;
+  justify-content: space-around;
+  align-self: center;
+  flex-wrap: wrap;
+  transition: .5s all;
+  margin-bottom: 20px;
+  @include breakpointMax(lg){
+    flex-wrap: nowrap;
+    flex-direction: column;
+    max-width: 100%;
+    justify-content: flex-start;
+    padding: 0 40px; 
+    margin: 0;
+    hr{
+        display: none;
+    }
+  }
+  @include breakpointMax(sm){
+    padding: 20px 0;
+    margin: 0;
+  }
+  &__hour-element{
+    position: relative;
+    margin: 10px 0;
+    min-width: 220px;
+    max-height: 280px;
+    z-index: 0;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background-color: $hour-element-bgc;
+    flex-basis: 10%;
+    @include breakpointMax(1840px){
+      min-width: 185px;
+    }
+    @include breakpointMax(xl){
+      flex-basis: 20%;
+      margin: 10px 15px;
+      max-height: 260px;
+    }
+    @include breakpointMax(lg){
+      flex-basis: 23%;
+      margin-right: 10px;
+    }
+    @include breakpointMax(md){
+      min-width: 200px;
+    }
+    @include breakpointMax(lg){
+      border-radius: 0;
+      min-width: 100%;
+      margin: 0;
+      padding: 0;
+      margin-bottom: 10px;
+      flex-direction: row;
+      justify-content: space-between;
+      max-height: 110px;
+    }
+    hr{
+      border: 0;
+      height: 1px;
+      background-color: $hr-color;
+    }
+  }
+  &__hour-and-day{
+    min-width: 115px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    @include breakpointMax(lg){
+      min-width: 120px;
+      border-right: $hour-element-border;
+    }
+    @include breakpointMax(xs){
+      min-width: 100px;
+      border-right: $hour-element-border;
+    }
+  }
+  &__hour{
+    z-index: 1;
+    font-size: 1.2rem;
+    text-align: center;
+    @include breakpointMax(lg){
+      font-size: 1rem;
+    }
+    @include breakpointMax(xs){
+      font-size: .9rem;
+    }
+  }
+  &__day{
+    z-index: 1;
+    font-size: 1.1rem;
+    padding: 0 5px;
+    text-align: center;
+    @include breakpointMax(lg){
+      font-size: 1rem;
+    }
+    @include breakpointMax(xs){
+      font-size: .9rem;
+    }
+  }
+  &__temp-and-description{
+    @include breakpointMax(lg){
+      display: flex;
+      min-width: 60%;
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+    }
+    @include breakpointMax(md){
+      flex-direction: column;
+    }
+    @include breakpointMax(xs){
+      min-width: 230px;
+    }
+    @include breakpointMax(xxs){
+      min-width: 200px;
+    }
+    @include breakpointMax(xxs){
+      min-width: 150px;
+      padding: 0;
+    }
+  }
+  &__temp-container{
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    @include breakpointMax(lg){
+      min-width: 200px;
+      justify-content: space-between;
+    }
+    @include breakpointMax(md){
+      min-width: 0;
+      justify-content: center;
+    }
+    i{
+      text-shadow: $weather-icon-shadow;
+      padding: 10px;
+      z-index: 1;
+      font-size: 2.7rem;
+      @include breakpointMax(1840px){
+        font-size: 2.2rem;
+      }
+      @include breakpointMax(lg){
+        margin-right: 20px;
+        font-size: 2rem;
+      }
+      @include breakpointMax(sm){
+        margin-right: 0;
+        font-size: 1.8rem;
+      }
+    }
+  }
+  &__temp{
+    z-index: 1;
+    padding: 5px;
+    font-size: 2.7rem;
+    color: $hour-element-temp-color;
+    @include breakpointMax(1840px){
+      font-size: 2.2rem;
+    }
+    @include breakpointMax(lg){
+      margin-right: 20px;
+      font-size: 2rem;
+    }
+    @include breakpointMax(md){
+      margin-right: 0;
+    }
+    @include breakpointMax(sm){
+        font-size: 1.6rem;
+    }
+  }
+  &__description{
+    display: flex;
+    z-index: 1;
+    min-height: 50px;
+    align-items: center;
+    justify-content: center;
+    @include breakpointMax(sm){
+      font-size: .9rem;
+    }
+  }
+  &__see-more{
+    position: relative;
+    z-index: -1;
+    width: 100%;
+    padding: 20px 0 0 0;
+    border: none;
+    background-color: $hour-element-bgc;
+    cursor: pointer;
+    @include breakpointMax(lg){
+      border-left: $hour-element-border;
+      width: 80px;
+    }
+    @include breakpointMax(xs){
+      width: 60px;
+    }
+    i{
+      transition: .5s;
+      width: 100%;
+      font-size: 1.5rem;
+      color: black;
+      @include breakpointMax(sm){
+        font-size: 1.3rem;
+      }
+    }
+    &--active{
+      i{  
+        transform: translateY(10px) rotate(180deg);
+      }
+      &:hover{ 
+        i{
+          transform: translateY(-5px) rotate(180deg);
+        }
+      }
+  }
+  &--inactive{
+      &:hover{
+        i{
+          transform: translateY(10px)
+        }
+      }  
+    }
+  }
+  &__more-info{
+    position: absolute;
+    padding: 15px;
+    width: 100%;
+    top: 99%;
+    left: 0;
+    height: auto;
+    background-color: $hour-element-bgc;
+    margin-bottom: 20px;
+    animation: moreInfo .3s;
+    border-radius: 0 0 4px 4px;
+    z-index: 2;
+    font-size: .9rem;
+    @include breakpointMax(lg){
+        border-top: $hour-element-border;
+        padding-left: 28%;
+        padding-right: 28%;
+    }
+    @include breakpointMax(sm){
+        font-size: .85rem;
+        padding-left: 22%;
+        padding-right: 22%;
+    }
+    @include breakpointMax(xs){
+        font-size: .85rem;
+        border-top: $hour-element-border;
+        padding: 15px;
+    }
+  }
+  &__more-info-parameters{
+      display: flex;
+      justify-content: space-between;
+  }
+  &__parameter{
+      text-align: left;
+      font-weight: 500;
+  }
+  hr{
+      margin-bottom: 5px;
+  }
+  @keyframes moreInfo {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0%;
+    }
+    40%{
+        opacity: 0%;
+    }
+    100% {
+        transform: translateY(-0%);
+        opacity: 100%;
+    }
+  }
+}
+
+.loading-screen{
+  z-index: 4;
+  background-color: $loading-screen-bgc;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  &__error{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+  }
+  .wi-day-sunny{
+    z-index: 5;
+    color: yellow;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 150px;
+    transform: translate(-50%, -50%) rotate(0deg);
+    animation: rotateSun 2s linear infinite;
+  }
+  @keyframes rotateSun {
+    0%, 100% {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  } 
+}
+
+.forecast-container{
+  margin-top: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  max-width: 2560px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  @include breakpointMax(sm){
+    margin-top: 10px;
+  }
+}
+
+.forecast-city{
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  align-self: flex-start;
+  color: $city-color;
+  font-size: 2.2rem;
+  padding-left: 30px;
+  margin-bottom: 30px;
+  @include breakpointMax(xs){
+    padding-left: 10px;
+    font-size: 1.3rem;
+  }
+  .fi{
+    align-self: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 2px;
+    font-size: 1.5rem;
+    filter: brightness(90%);
+    @include breakpointMax(xs){
+      font-size: .9rem;
+    }
+  }
+  &__country{
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    align-self: center;
+    @include breakpointMax(xs){
+      font-size: .9rem;
+    }
+  }
+}
+
+.day-forecast{
+  background-color: rgba(255, 255, 255, 0.2);
+  opacity: 99%;
+  z-index: 1;
+  width: 100%;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 130px;
+  @include breakpointMax(md){
+    flex-direction: column;
+  }
+  &__day-of-week{
+    align-self: center;
+    font-size: 30px;
+    color: $weather-text-color;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    text-shadow: $forecast-text-shadow;
+    @include breakpointMax(md){
+      width: 50%;
+    }
+    @include breakpointMax(xs){
+      width: 100%;
+    }
+  }
+  &__day-and-details{
+    display: flex;
+    @include breakpointMax(1820px){
+      flex-direction: column;
+      padding: 20px;
+    }
+    @include breakpointMax(md){
+      width: 100%;
+      flex-direction: row;
+    }
+    @include breakpointMax(sm){
+      max-width: 100%;
+    }
+    @include breakpointMax(xs){
+      flex-direction: column;
+      max-width: 100%;
+      padding: 10px;
+    }
+  }
+  &__day-name{
+    font-size: 1.7rem;
+    align-self: center;
+  }
+  &__date{
+    font-size: 1.1rem;
+    align-self: center;
+  }
+  &__day-temp{
+    min-width: 200px;
+    align-self: center;
+    color: $weather-text-color;
+    font-size: 3rem;
+    text-shadow: $forecast-text-shadow;
+  }
+  &__feels{
+    align-self: center;
+    font-size: 1.1rem;
+    i{
+      margin-right: .5rem;
+    }
+  }
+  &__day-description{
+    max-width: 200px;
+    align-self: center;
+    font-size: 1.1rem;
+  }
+  &__details{
+    padding-right: 10px;
+    min-width: 210px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: $weather-text-color;
+    text-shadow: $forecast-text-shadow;
+    @include breakpointMax(xs){
+      width: 100%;
+      align-self: center;
+    }
+    .wi{
+      width: 35px;
+    }
+  }
+  &__details-parameters{
+    font-weight: 400;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__hours{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-basis: 75%;
+    flex-wrap: wrap;
+    @include breakpointMax(1820px){
+      flex-basis: 85%;
+    }
+    @include breakpointMax(lg){
+      flex-wrap: nowrap;
+      flex-direction: column;
+      max-width: 100%;
+      justify-content: flex-start;
+      padding: 20px;
+      margin: 0;
+      hr{
+        display: none;
+      }
+    }
+    @include breakpointMax(sm){
+      padding: 0;
+    }
+  }
+  &__hour-element{
+    position: relative;
+    margin: 10px 0;
+    max-height: 240px;
+    z-index: 1;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background-color: $hour-element-bgc;
+    min-width: 150px;
+    flex-basis: 11.5%;
+    margin-right: 10px;
+    @include breakpointMax(xl){
+      flex-basis: 20%;
+      max-height: 220px;
+    }
+    @include breakpointMax(lg){
+      flex-basis: 23%;
+      margin-right: 10px;
+    }
+    @include breakpointMax(md){
+      min-width: 200px;
+    }
+    @include breakpointMax(lg){
+      border-radius: 0;
+      min-width: 100%;
+      margin: 0;
+      padding: 0;
+      margin-bottom: 10px;
+      flex-direction: row;
+      justify-content: space-between;
+      max-height: 110px;
+    }
+    hr{
+      border: 0;
+      height: 1px;
+      background-color: $hr-color;
+    }
+  }
+  &__hour-and-day{
+    position: relative;
+    min-width: 115px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include breakpointMax(lg){
+      border-right: $hour-element-border;
+      min-height: 100%;
+    }
+    @include breakpointMax(md){
+      min-width: 70px;
+    }
+  }
+  &__hour{
+    text-shadow: none;
+    z-index: 1;
+    font-size: 1.2rem;
+    @include breakpointMax(lg){
+      font-size: 1rem;
+  }
+    @include breakpointMax(sm){
+        font-size: 1rem;
+    }
+    @include breakpointMax(xs){
+        font-size: .9rem;
+    }
+  }
+  &__day{
+    display: none;
+  }
+  &__temp-container{
+    z-index: 1;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    i{
+      text-shadow: $weather-icon-shadow;
+      padding: 10px;
+      z-index: 1;
+      font-size: 2.3rem;
+      @include breakpointMax(xxl){
+        font-size: 2rem;
+      }  
+    }
+  }
+  &__temp-and-description{
+    @include breakpointMax(lg){
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10px 0;
+    }
+    @include breakpointMax(xs){
+      min-width: 230px;
+    }
+    @include breakpointMax(xxs){
+      min-width: 200px;
+    }
+    @include breakpointMax(xxs){
+      min-width: 170px;
+    }
+  }
+  &__temp{
+    z-index: 1;
+    padding: 5px;
+    font-size: 2rem;
+    color: $hour-element-temp-color;
+    align-self: center;
+    @include breakpointMax(xxl){
+        font-size: 1.5rem;
+    }
+    @include breakpointMax(sm){
+        font-size: 1.4rem;
+    }  
+  }
+  &__description{
+    width: 100%;
+    text-shadow: none;
+    font-size: .9rem;
+    z-index: 1;
+    min-height: 50px;
+    @include breakpointMax(md){
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  &__see-more{
+    position: relative;
+    z-index: -1;
+    width: 100%;
+    padding-top: 20px;
+    border: none;
+    background-color: $hour-element-bgc;
+    cursor: pointer;
+    @include breakpointMax(lg){
+        border-left: $hour-element-border;
+        width: 80px;
+    }
+    @include breakpointMax(xs){
+        width: 60px;
+    }
+    i{
+      transition: .5s;
+      width: 100%;
+      font-size: 1.5rem;
+      color: black;
+      @include breakpointMax(sm){
+        font-size: 1.3rem;
+      }
+    }
+    &--active{
+      i{  
+        transform: translateY(10px) rotate(180deg);
+      }
+      &:hover{ 
+        i{
+          transform: translateY(-5px) rotate(180deg);
+        }
+      }
+    }
+    &--inactive{
+      &:hover{
+        i{
+          transform: translateY(10px)
+        }
+      }  
+    }
+  }
+  &__more-info{
+    display: block;
+    position: absolute;
+    padding: 15px;
+    width: 100%;
+    top: 99%;
+    left: 0;
+    height: auto;
+    background-color: $hour-element-bgc;
+    margin-bottom: 120px;
+    animation: moreInfo .3s;
+    border-radius: 0 0 4px 4px;
+    text-shadow: none;
+    font-size: .75rem;
+    @include breakpointMax(xl){
+      font-size: .85rem;
+    }
+    @include breakpointMax(lg){
+      border-top: $hour-element-border;
+      padding-left: 28%;
+      padding-right: 28%;
+    }
+    @include breakpointMax(sm){
+      font-size: .85rem;
+      padding-left: 22%;
+      padding-right: 22%;
+    }
+    @include breakpointMax(xs){
+      font-size: .85rem;
+      border-top: $hour-element-border;
+      padding: 15px;
+    }
+  }
+  &__more-info-parameters{
+    display: flex;
+    justify-content: space-between;
+  }
+  &__parameter{
+    text-align: left;
+    font-weight: 500;
+  }
+  hr{
+    margin-bottom: 5px;
+  }
+  @keyframes moreInfo {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0%;
+    }
+    40%{
+      opacity: 0%;
+    }
+    100% {
+      transform: translateY(-0%);
+      opacity: 100%;
+    }
+  }
+}
+

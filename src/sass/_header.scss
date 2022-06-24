@@ -1,0 +1,332 @@
+@import './breakpoints.scss';
+@import './variables.scss';
+
+.header{
+  min-width: 100%;
+  height: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  background-color: none;
+  z-index: 2;
+  background-image: $header-bgc;
+  transition: .3s;
+  @include breakpointMax(sm){
+    transition: none;
+    height: 60px;
+  }
+  &__content{
+    width: 100%;
+    max-width: 2500px;
+    height: 60px;
+    justify-content: space-between;
+    display: flex;
+  }
+  &--scrolled{
+    background-image: none;
+    height: 60px;
+    background-color: $header-bgc-scrolled;
+    box-shadow: $header-shadow;
+    transition: .7 linear;
+    @include breakpointMax(sm){
+      transition: none;
+    }
+  }
+}
+
+.logo{
+  z-index: 2;
+  padding: 10px;
+  width: 130px;
+  transition: .3s;
+  @include breakpointMax(sm){
+    width: 120px;
+  }
+  &:hover{
+    filter: opacity(70%);
+  }
+}
+
+.navigation{
+  &__links{
+    transition: .5s;
+    margin-right: 20px;
+    display: flex;
+    &--mobile{
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      top: 60px;
+      left: -100vw;
+      width: 0;
+      height: 0;
+      box-shadow: 2px 2px 2px 0px rgba(66, 68, 90, 1);
+      padding: 20px;
+    }
+    &--active{
+      color: white !important; 
+      opacity: 100%;
+      position: fixed;
+      transform: translateX(20px);
+      top: 60px;
+      left: -20px;
+      width: 80vw;
+      height: 100vh;
+      background-color: dimgray;
+      @include breakpointMax(xxxs){
+        width: 95vw;
+      }
+      @include breakpointMin(md){
+        display: none;
+      }
+    }
+  }
+  &__link{
+    z-index: 2;
+    min-width: 70px;
+    list-style:none;
+    font-size: 1.125rem;
+    text-transform: uppercase;
+    padding: 15px;
+    @include breakpointMax(md){
+      margin-left: -25px;
+      padding: 20px;
+    }
+    a{
+      color: $nav-link-color;
+      text-decoration: none;
+      cursor: pointer;
+      transition: .3s all;
+      &.active{
+        color: $nav-link-color-hover;
+        cursor: default;
+      }
+    }
+    :hover{
+      color: $nav-link-color-hover;
+    }
+    &--scrolled{
+      a{
+        color: $nav-link-scrolled;
+        &.active{
+          color: $nav-link-scrolled-color-hover;
+          cursor: default;
+        }
+      }
+      :hover{
+        color: $nav-link-scrolled-color-hover;
+      }
+    }
+    &--mobile{
+      width: 100%;
+      text-align: left;
+      padding-left: 45px;
+      a{
+        width: 100%;
+      }
+    }        
+  }
+  &__hamburger{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    font-size: 25px;
+    display: block;
+    cursor: pointer;
+    transform: translate(0, -10px);
+    &--black{
+        color: $nav-link-scrolled;
+    }
+    &--white{
+        color: $nav-link-color;
+    }
+    @include breakpointMin(md) {
+        display: none;
+    }
+  }   
+}
+
+.city-search-engine{
+  background-color: none;
+  @include breakpointMax(md) {
+      width: 100%;
+  }
+  &__form{
+    padding: 10px;
+    @include breakpointMax(md) {
+      width: 100%;
+    }
+  }
+  &__input-container{
+    display: flex;
+    @include breakpointMax(md) {
+      width: 100%;
+    }
+  }
+  &__input{
+    width: auto;
+    z-index: 3;
+    padding: 10px;
+    width: 266px;
+    color: white;
+    border: none;
+    text-shadow: $city-list-text-shadow;
+    background-color: $weather-transparent-bgc;
+    transition: all .5s;
+    &::placeholder{
+      color: rgb(250, 250, 250);
+      text-align: center;
+      text-shadow: $city-list-text-shadow;
+      font-weight: 300;
+    }
+    &:focus{
+      outline: none;
+    }
+    &--scrolled{
+        background-color: #6283ac;
+    }
+    &--mobile{
+        width: 100%;
+    }
+  }
+  &__city-list{
+    z-index: 4;
+    background-color: $city-list-bgc;
+    animation: .5s city-list;
+    overflow: hidden;
+    box-shadow: -4px 5px 9px -4px rgba(173, 173, 173, 0.2);
+    display: block;
+    &--scrolled{
+      background-color: $city-list-scrolled-bgc;
+      box-shadow: -4px 5px 9px -4px rgba(66, 68, 90, 1);
+    }
+  }
+  &__city-list-item{
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    text-shadow: $city-list-text-shadow;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    border-bottom: 1px solid $weather-transparent-bgc;
+    animation: 1s city-item;
+    transition: .3s;
+    &:hover{
+      background-color: $city-list-item-hover;
+    }
+    &--scrolled{
+      color: black;
+      text-shadow: none;
+      border-bottom: 1px solid $city-list-border;
+      &:hover{
+        background-color: $city-list-item-scrolled-hover;
+      }
+    }
+  }
+  &__city-not-found{
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    color: rgb(235, 235, 235);
+    text-shadow: $city-list-text-shadow;
+    font-size: 14px;
+    font-weight: 400;
+    border-bottom: 1px solid $weather-transparent-bgc;
+    animation: 1s moreInfo;
+    transition: .3s;
+    &--scrolled{
+      color: rgb(82, 82, 82);
+      text-shadow: none;
+      border-bottom: $city-list-border;
+    }
+  }
+  &__arrow{
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    color: white;
+    text-shadow: $city-list-text-shadow;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 400;
+    border-bottom: 1px solid $weather-transparent-bgc;
+    animation: 1s city-item;
+    i{
+      width: 100%;
+      transition: .3s all;
+      &:hover{
+        transform: translateY(-3px);
+      }
+    }
+    &--scrolled{
+      color: black;
+      text-shadow: none;
+      border-bottom: $city-list-border;
+    }
+  }
+  &__country{
+    border-radius: 5px;
+    width: 45px;
+    display: flex;
+    justify-content: space-between;
+    &--scrolled{
+      .fi{
+        filter: brightness(90%);
+      }
+    }
+  }
+  &__button{
+    border: none;
+    padding: 10px;
+    background-color: $weather-transparent-bgc;
+    color: white;
+    text-shadow: $city-list-text-shadow;
+    border-left: 1px solid rgba(105, 105, 105, 0.692);
+    cursor: pointer;
+    transition: all .5s;
+    :hover{
+      transform: scale(1.1);
+    }
+    &--scrolled{
+      background-color: #6283ac;
+      color: white;
+    }
+  }
+
+  @keyframes city-item {
+    0% {
+      opacity: 0%;
+    }
+    40%{
+      opacity: 0%;
+    }
+    100% {
+      transform: translateY(-0%);
+      opacity: 100%;
+      display: none;
+    }
+  }
+
+  @keyframes city-list {
+    0% {
+      opacity: 0%;
+      transform: translateY(-50%);
+    }
+    35%{
+      opacity: 0%;
+    }
+    100% {
+      opacity: 100%;
+      transform: translateY(0%);
+    }
+  }
+}
+
+
+
