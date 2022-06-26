@@ -22,4 +22,4 @@ Libraries and solutions used:
 
 The application was launched using GitHub Pages. 
 
-[wieckowskilukasz.github.io/weatherForecast](https://github.com/lipis/flag-icons)
+[wieckowskilukasz.github.io/weatherForecast](https://wieckowskilukasz.github.io/weatherForecast)
