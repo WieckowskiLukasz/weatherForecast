@@ -65,7 +65,7 @@
       width: 0;
       height: 0;
       box-shadow: 2px 2px 2px 0px rgba(66, 68, 90, 1);
-      padding: 20px;
+      padding: 20px 10px 0 10px;
     }
     &--active{
       color: white !important; 
@@ -125,8 +125,11 @@
       width: 100%;
       text-align: left;
       padding-left: 45px;
+      display: block;
+      min-width: 100%;
       a{
-        width: 100%;
+        display: block;
+        min-width: 100%;
       }
     }        
   }
