@@ -9,6 +9,7 @@ import { Route , Routes} from 'react-router';
 import ActualWeatherPage from './pages/ActualWeatherPage';
 import ForecastPage from './pages/ForecastPage';
 import {cookieExpires} from './scripts/dateFunctions';
+import Page404 from './pages/Page404';
 
 function App() {
   const[lat, setLat] = useState(defaultObject.lat);
@@ -44,7 +45,7 @@ function App() {
             <Routes>
               <Route exact path='/' element={<ActualWeatherPage/>}/>
               <Route path='/prognoza' element={<ForecastPage/>}/>
-              <Route path='*' element={<ActualWeatherPage/>}/>
+              <Route path='*' element={<Page404/>}/>
             </Routes>
           </main>
           <footer>
