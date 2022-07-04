@@ -31,7 +31,7 @@ export default function ForecastPage() {
     setDataLoading(true);
     setDataLoaded(false);
     fetchData();
-  },[lat]);
+  },[lat, lon]);
 
   const handleDataLoaded = (value) =>setDataLoaded(value);
 

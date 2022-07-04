@@ -82,7 +82,7 @@ export default function ActualWeatherPage() {
           <div className='actual-weather'>
             <div className='actual-weather__main-data'>
               <div className='actual-weather__coordinates'>
-                <a target='_blank' href={`https://google.com/maps/?ll=${lat},${lon}`}>
+                <a target='_blank' rel='noreferrer' href={`https://google.com/maps/?ll=${lat},${lon}`}>
                   <i className='las la-map-marked-alt'></i>&nbsp;
                   lat: {lat}&nbsp;
                   lon: {lon}
