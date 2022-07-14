@@ -3,7 +3,7 @@ import WeatherIcon from '../components/WeatherIcon';
 import LoadingScreen from '../components/LoadingScreen';
 import WeatherBackground from '../components/WeatherBackground';
 import WeatherHourElements from '../components/WeatherHourElements';
-import { AppContext } from '../AppContext';
+import { AppContext } from '../AppContext.tsx';
 
 export default function ActualWeatherPage() {
   const [country, setCountry] = useState();

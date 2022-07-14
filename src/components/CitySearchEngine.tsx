@@ -1,14 +1,20 @@
-import { AppContext } from '../AppContext';
+import { AppContext } from '../AppContext.tsx';
 import React, { useEffect, useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 
-export default function CitySearchEngine({propsPageScrolled, propsPageMobile, handleActiveMobileMenu}) {
-	const [error, setError] = useState();
-	const [cityList, setCityList] = useState();
+interface CitySearchEngineProps {
+	propsPageScrolled: boolean;
+	propsPageMobile: boolean;
+	handleActiveMobileMenu: (value: boolean) => boolean;
+}
+
+export default function CitySearchEngine({propsPageScrolled, propsPageMobile, handleActiveMobileMenu}:CitySearchEngineProps) {
+	const [error, setError] = useState(false);
+	const [cityList, setCityList] = useState<[] | null>();
 	const [cityNotFound, setCityNotFound] = useState(false);
-	const [inputValue, setInputValue] = useState('');
-	const [cityListIsActive, setCityIsListActive] = useState();
-	const [pageScrolled, setPageScrolled] = useState();
+	const [inputValue, setInputValue] = useState<string>();
+	const [cityListIsActive, setCityIsListActive] = useState(false);
+	const [pageScrolled, setPageScrolled] = useState(false);
 	const [pageMobile, setPageMobile] = useState(false);
 	const { setCoordinates } = useContext(AppContext);
 	const location = useLocation();
@@ -36,14 +42,14 @@ export default function CitySearchEngine({propsPageScrolled, propsPageMobile, ha
 		})
 		.catch(error => {
 			alert(error);
-			setError(false);
+			setError(true);
 		});
 		setCityIsListActive(true);
 	};
 
 	const handleInput = (e) => setInputValue(e.target.value);
 	const handleButton = () => {if(inputValue !== '') fetchData();};
-	const handleClickCity = (lat, lon, city) =>{
+	const handleClickCity = (lat: string | number, lon: string | number, city: string) =>{
 		setInputValue('');
 		setCityList(null);
 		setCityIsListActive(false);
@@ -86,7 +92,6 @@ export default function CitySearchEngine({propsPageScrolled, propsPageMobile, ha
 				<CityList 
 					cities={cityList}
 					handleClickCity={handleClickCity}
-					handleClickArrow={handleClickArrow}
 					pageScrolled={pageScrolled}
 					mobile={pageMobile}
 				/>
@@ -123,7 +128,16 @@ export default function CitySearchEngine({propsPageScrolled, propsPageMobile, ha
   );
 };
 
-const CityList = ({cities, handleClickCity, pageScrolled, mobile}) =>{
+
+
+interface CityListProps {
+	cities: [] | any;
+	handleClickCity: (lat: string | number, lon: string | number, name: string) => void;
+	pageScrolled: boolean;
+	mobile: boolean;
+}
+
+const CityList = ({cities, handleClickCity, pageScrolled, mobile}:CityListProps) =>{
 	const items = cities.map((item, index)=> 
 		<CityItem
 			key={index}
@@ -141,9 +155,20 @@ const CityList = ({cities, handleClickCity, pageScrolled, mobile}) =>{
   );
 };
 
-const CityItem = ({name, country, lat, lon, handleClickCity, pageScrolled, mobile}) =>{
+
+
+interface CityItemProps {
+	name: string;
+	country: string;
+	lat: string | number;
+	lon: string | number;
+	handleClickCity: (lat: string | number, lon: string | number, name: string) => void;
+	pageScrolled: boolean;
+	mobile: boolean;
+}
+
+const CityItem = ({name, country, lat, lon, handleClickCity, pageScrolled, mobile}:CityItemProps) =>{
 	const countryCode = country.toLowerCase();
-	console.log(pageScrolled);
 	const cityListItemClass = (pageScrolled && !mobile) ? 
 		'city-search-engine__city-list-item city-search-engine__city-list-item--scrolled' 
 		: 'city-search-engine__city-list-item';

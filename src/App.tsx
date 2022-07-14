@@ -4,19 +4,20 @@ import Footer from './layouts/Footer';
 import CookiesInfo from './layouts/CookiesInfo';
 import { HashRouter } from 'react-router-dom';
 import { useState } from 'react';
-import { AppContext, defaultObject } from './AppContext';
+import { AppContext, defaultObject } from './AppContext.tsx';
 import { Route , Routes} from 'react-router';
 import ActualWeatherPage from './pages/ActualWeatherPage';
 import ForecastPage from './pages/ForecastPage';
-import {cookieExpires} from './scripts/dateFunctions';
-import Page404 from './pages/Page404';
+import {cookieExpires} from './scripts/dateFunctions.ts';
+import Page404 from './pages/Page404.tsx';
+import React from 'react';
 
 function App() {
   const[lat, setLat] = useState(defaultObject.lat);
   const[lon, setLon] = useState(defaultObject.lon);
   const[city, setCity] = useState(defaultObject.city);
   
-  const setCoordinates = (lat, lon, city) =>{
+  const setCoordinates = (lat: number | string, lon: number | string, city: string) =>{
     setLat(lat);
     setLon(lon);
     setCity(city);
@@ -28,7 +29,7 @@ function App() {
 
   return (
     <div className="App" >
-      <HashRouter hashtype='noslash'>
+      <HashRouter>
         <AppContext.Provider
           value={{
             lat: lat,
@@ -43,7 +44,7 @@ function App() {
         <div className='container'>
           <main>
             <Routes>
-              <Route exact path='/' element={<ActualWeatherPage/>}/>
+              <Route path='/' element={<ActualWeatherPage/>}/>
               <Route path='/prognoza' element={<ForecastPage/>}/>
               <Route path='*' element={<Page404/>}/>
             </Routes>

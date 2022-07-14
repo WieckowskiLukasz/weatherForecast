@@ -1,6 +1,6 @@
 import WeatherHourElements from '../components/WeatherHourElements';
 import WeatherIcon from '../components/WeatherIcon';
-import {getHour} from '../scripts/dateFunctions';
+import {getHour} from '../scripts/dateFunctions.ts';
 
 export default function DayElement({forecast}) {
   forecast = forecast.slice(1, 5);

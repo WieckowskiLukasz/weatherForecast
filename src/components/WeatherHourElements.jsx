@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import WeatherIcon from '../components/WeatherIcon';
-import {getDayOfWeek, getHour} from '../scripts/dateFunctions';
+import {getDayOfWeek, getHour} from '../scripts/dateFunctions.ts';
 
 export default function WeatherHourElements({forecast, className, timezone}) {
   const items = forecast.map((item, index)=> 

@@ -2,8 +2,8 @@ import {useState, useEffect, useContext} from 'react';
 import DayElement from '../components/DayElement';
 import WeatherBackground from '../components/WeatherBackground';
 import LoadingScreen from '../components/LoadingScreen';
-import { AppContext } from '../AppContext';
-import {getDayOfWeek, getHour} from '../scripts/dateFunctions';
+import { AppContext } from '../AppContext.tsx';
+import {getDayOfWeek, getHour} from '../scripts/dateFunctions.ts';
 
 export default function ForecastPage() {
   

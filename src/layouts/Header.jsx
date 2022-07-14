@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react';
 import { NavLink } from 'react-router-dom';
-import CitySearchEngine  from '../components/CitySearchEngine';
+import CitySearchEngine  from '../components/CitySearchEngine.tsx';
 import whiteLogo  from '../images/logo/whiteLogo.svg';
 import blackLogo  from '../images/logo/blackLogo.svg';
 import { useLocation } from 'react-router-dom';

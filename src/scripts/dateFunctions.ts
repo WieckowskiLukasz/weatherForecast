@@ -1,4 +1,4 @@
-  export const getDayOfWeek = (propsDate, timezone = 0) =>{
+export const getDayOfWeek = (propsDate: number, timezone: number = 0) =>{
     const timestamp = propsDate + timezone + offsetUTC();
     const date = new Date(timestamp*1000);
     const days = ['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota'];
@@ -6,10 +6,10 @@
     return(dayOfWeek);
   };
 
-  export const getHour = (propsDate, timezone = 0) =>{
+  export const getHour = (propsDate: number, timezone: number = 0) =>{
     const timestamp = propsDate + timezone + offsetUTC();
     const date = new Date(timestamp * 1000);
-    let hours = date.getHours();
+    let hours: number | string = date.getHours();
     if(hours < 10) hours = '0' + hours;
     const minutes = "0" + date.getMinutes();
     const formattedTime = hours + ':' + minutes;

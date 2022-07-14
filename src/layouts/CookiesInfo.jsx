@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import cookies from 'js-cookies';
-import {cookieExpires} from '../scripts/dateFunctions';
+import {cookieExpires} from '../scripts/dateFunctions.ts';
 
 export default function CookiesInfo() {
 
