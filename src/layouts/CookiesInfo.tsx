@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import cookies from 'js-cookies';
 import {cookieExpires} from '../scripts/dateFunctions.ts';
 
 export default function CookiesInfo() {
 
-	const [cookiesAccepted, setCookiesAccepted] = useState(null);
+	const [cookiesAccepted, setCookiesAccepted] = useState<boolean>();
 	
 	useEffect(() => {
     const info = cookies.getItem('info');

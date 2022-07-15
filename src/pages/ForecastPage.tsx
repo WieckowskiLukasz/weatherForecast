@@ -1,18 +1,18 @@
-import {useState, useEffect, useContext} from 'react';
-import DayElement from '../components/DayElement';
-import WeatherBackground from '../components/WeatherBackground';
-import LoadingScreen from '../components/LoadingScreen';
+import React, {useState, useEffect, useContext} from 'react';
+import DayElement from '../components/DayElement.tsx';
+import WeatherBackground from '../components/WeatherBackground.tsx';
+import LoadingScreen from '../components/LoadingScreen.tsx';
 import { AppContext } from '../AppContext.tsx';
 import {getDayOfWeek, getHour} from '../scripts/dateFunctions.ts';
 
 export default function ForecastPage() {
   
-  const [country, setCountry] = useState();
-  const [fourDaysData, setFourDaysData] = useState();
+  const [country, setCountry] = useState<string>();
+  const [fourDaysData, setFourDaysData] = useState<any[]>();
   const { city, lat, lon } = useContext(AppContext);
   const [error, setError] = useState(false);
   const [dataLoading, setDataLoading] = useState(true);
-  const [dataLoaded, setDataLoaded] = useState();
+  const [dataLoaded, setDataLoaded] = useState<boolean>();
 
   const fetchData = () =>{
     fetch(`https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&lang=pl&appid=22e4cc28098f4253c589877fc9e9cbd9`)
@@ -35,12 +35,12 @@ export default function ForecastPage() {
 
   const handleDataLoaded = (value) =>setDataLoaded(value);
 
-  const handleDayOfWeek = (result, timezone) =>{
-    let newWeek = [];
-    let newDay = [];
+  const handleDayOfWeek = (result: any[], timezone: number) =>{
+    let newWeek: any[] = [];
+    let newDay: any[] = [];
     result.forEach(item => {
-      let timestamp = item.dt + timezone;
-      let hour = getHour(timestamp);
+      let timestamp: number = item.dt + timezone;
+      let hour: string = getHour(timestamp);
       item.day = getDayOfWeek(timestamp);
       item.dt = timestamp;
       newDay.push(item);
@@ -65,7 +65,7 @@ export default function ForecastPage() {
         <div className='forecast-container'>
           <div className='forecast-city'>
             <div className='forecast-city__city-name'>Prognoza: {city}</div>
-            <div class={`fi fi-${country}`}></div>
+            <div className={`fi fi-${country}`}></div>
             <div className='forecast-city__country'>{country}</div>
           </div>
           <DayElement forecast={fourDaysData}/>

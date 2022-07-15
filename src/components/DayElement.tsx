@@ -1,13 +1,18 @@
-import WeatherHourElements from '../components/WeatherHourElements';
-import WeatherIcon from '../components/WeatherIcon';
+import React from 'react';
+import WeatherHourElements from '../components/WeatherHourElements.tsx';
+import WeatherIcon from '../components/WeatherIcon.tsx';
 import {getHour} from '../scripts/dateFunctions.ts';
 
-export default function DayElement({forecast}) {
-  forecast = forecast.slice(1, 5);
-  let oneDay = {};
-  let daysMainData = [];
+interface DayElementProps {
+	forecast: any[];
+}
 
-  forecast.forEach((item) => {
+export default function DayElement({forecast}: DayElementProps) {
+  const forecastFourDays: any = forecast.slice(1, 5);
+  let oneDay: any = {};
+  let daysMainData: any[] = [];
+
+  forecastFourDays.forEach((item) => {
     item.forEach(element =>{
       let hour = getHour(element.dt);
       if(hour === '13:00' || hour === '14:00' || hour === '15:00'){
@@ -27,7 +32,7 @@ export default function DayElement({forecast}) {
     });
   });
 
-  const dayElements = forecast.map((item, index)=>
+  const dayElements = forecastFourDays.map((item, index)=>
     <OneDayElement
       key = {index}
       day = {daysMainData[index].day}
@@ -50,7 +55,21 @@ export default function DayElement({forecast}) {
   );
 };
 
-function OneDayElement({day, date, temp, feelsLike, icon, description, clouds, humidity, pressure, wind, oneDayForeceast}) {
+interface OneDayElementProps {
+  day: string;
+	date: string;
+	temp: number;
+	description: string;
+  icon: string;
+  feelsLike: number;
+  clouds: number;
+  humidity: number;
+  pressure: number;
+  wind: number;
+  oneDayForeceast: any[];
+}
+
+function OneDayElement({day, date, temp, feelsLike, icon, description, clouds, humidity, pressure, wind, oneDayForeceast}: OneDayElementProps) {
   return (
     <div className='day-forecast'>
         <div className='day-forecast__day-and-details'>

@@ -1,8 +1,14 @@
-import {useState} from 'react'
-import WeatherIcon from '../components/WeatherIcon';
+import React, {useState} from 'react'
+import WeatherIcon from '../components/WeatherIcon.tsx';
 import {getDayOfWeek, getHour} from '../scripts/dateFunctions.ts';
 
-export default function WeatherHourElements({forecast, className, timezone}) {
+interface WeatherHourElementsProps {
+	forecast: any[];
+	className: string;
+	timezone: number;
+}
+
+export default function WeatherHourElements({forecast, className, timezone}: WeatherHourElementsProps) {
   const items = forecast.map((item, index)=> 
     <HourElement
       key={index}
@@ -24,7 +30,21 @@ export default function WeatherHourElements({forecast, className, timezone}) {
   );
 };
 
-const HourElement = ({date, temp, description, icon, feelsLike, clouds, humidity, pressure, windSpeed, className, timezone}) => {
+interface HourElementProps {
+	date: number;
+	temp: number;
+	description: string;
+  icon: JSX.Element;
+  feelsLike: number;
+  clouds: number;
+  humidity: number;
+  pressure: number;
+  windSpeed: number;
+  className: string;
+  timezone: number;
+}
+
+const HourElement = ({date, temp, description, icon, feelsLike, clouds, humidity, pressure, windSpeed, className, timezone}: HourElementProps) => {
   const[moreInfoActive, setMoreInfoActive] = useState(false);
   
   const handleClick = () => setMoreInfoActive(prev => !prev);
@@ -64,11 +84,11 @@ const HourElement = ({date, temp, description, icon, feelsLike, clouds, humidity
     : `${className}__see-more ${className}__see-more--inactive`;
   const handleMarginBottom = (moreInfoActive && (window.innerWidth <= 1600) )? 
     {marginBottom: '155px'} 
-    : null;
+    : {marginBottom: '10px'} ;
   const hour = getHour(date, timezone);
 
   const Day = () =>{
-    const day = getDayOfWeek(date, timezone);
+    const day: string = getDayOfWeek(date, timezone);
     let colorDay;
     if(day === 'Sobota') colorDay = 'dimgray';
     else if(day === 'Niedziela') colorDay = '#f54254';
@@ -102,7 +122,7 @@ const HourElement = ({date, temp, description, icon, feelsLike, clouds, humidity
       </div>
       <hr></hr>
       <button onClick={handleClick} className={handleSeeMoreClass}>
-        <i class="las la-angle-double-down"></i>
+        <i className="las la-angle-double-down"></i>
       </button>
       {moreInfo}
     </div>

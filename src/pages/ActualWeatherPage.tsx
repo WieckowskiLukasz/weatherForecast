@@ -1,25 +1,25 @@
-import {useState, useEffect, useContext} from 'react';
-import WeatherIcon from '../components/WeatherIcon';
-import LoadingScreen from '../components/LoadingScreen';
-import WeatherBackground from '../components/WeatherBackground';
-import WeatherHourElements from '../components/WeatherHourElements';
+import React, {useState, useEffect, useContext} from 'react';
+import WeatherIcon from '../components/WeatherIcon.tsx';
+import LoadingScreen from '../components/LoadingScreen.tsx';
+import WeatherBackground from '../components/WeatherBackground.tsx';
+import WeatherHourElements from '../components/WeatherHourElements.tsx';
 import { AppContext } from '../AppContext.tsx';
 
 export default function ActualWeatherPage() {
-  const [country, setCountry] = useState();
-  const [temp, setTemp] = useState();
-  const [feelsLike, setFeelsLike] = useState();
-  const [description, setDescription] = useState();
-  const [clouds, setClouds] = useState();
-  const [humidity, setHumidity] = useState();
-  const [pressure, setPressure] = useState();
-  const [windSpeed, setWindSpeed] = useState();
-  const [shortTermForecastData, setShortTermForecastData] = useState();
+  const [country, setCountry] = useState<string>();
+  const [temp, setTemp] = useState<number>();
+  const [feelsLike, setFeelsLike] = useState<number>();
+  const [description, setDescription] = useState<string>();
+  const [clouds, setClouds] = useState<number>();
+  const [humidity, setHumidity] = useState<number>();
+  const [pressure, setPressure] = useState<number>();
+  const [windSpeed, setWindSpeed] = useState<number>();
+  const [shortTermForecastData, setShortTermForecastData] = useState<any[]>();
   const [weatherCode, setWeatherCode] = useState('01d');
-  const [timezone, setTimezone] = useState();
+  const [timezone, setTimezone] = useState<number>();
   const [error, setError] = useState(false);
   const [dataLoading, setDataLoading] = useState(true);
-  const [dataLoaded, setDataLoaded] = useState();
+  const [dataLoaded, setDataLoaded] = useState<boolean>();
   const { city, lat, lon } = useContext(AppContext);
 
   useEffect(() => {
@@ -76,7 +76,7 @@ export default function ActualWeatherPage() {
         <div className='weather-container'>
           <div className='weather-city'>
             <div className='weather-city__name'>{city}</div>
-            <div class={`fi fi-${country}`}></div>
+            <div className={`fi fi-${country}`}></div>
             <div className='weather-city__country'>{country}</div>
           </div>
           <div className='actual-weather'>

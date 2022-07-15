@@ -1,16 +1,16 @@
+import React from 'react';
 import './App.scss';
-import Header from './layouts/Header';
-import Footer from './layouts/Footer';
-import CookiesInfo from './layouts/CookiesInfo';
+import Header from './layouts/Header.tsx';
+import Footer from './layouts/Footer.tsx';
+import CookiesInfo from './layouts/CookiesInfo.tsx';
 import { HashRouter } from 'react-router-dom';
 import { useState } from 'react';
 import { AppContext, defaultObject } from './AppContext.tsx';
 import { Route , Routes} from 'react-router';
-import ActualWeatherPage from './pages/ActualWeatherPage';
-import ForecastPage from './pages/ForecastPage';
+import ActualWeatherPage from './pages/ActualWeatherPage.tsx';
+import ForecastPage from './pages/ForecastPage.tsx';
 import {cookieExpires} from './scripts/dateFunctions.ts';
 import Page404 from './pages/Page404.tsx';
-import React from 'react';
 
 function App() {
   const[lat, setLat] = useState(defaultObject.lat);

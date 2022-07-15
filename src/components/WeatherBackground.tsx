@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { useEffect, useState} from 'react';
 import clearSkyDay from '../images/weather-backgrounds/01d.webp';
 import clearSkyNight from '../images/weather-backgrounds/01n.webp';
@@ -20,9 +21,9 @@ import mistNight from '../images/weather-backgrounds/50n.webp';
 
 export default function WeatherBackground(props) {
   const[backgroundID, setBackgroundID] = useState('01d');
-  const[background, setBackground] = useState();
+  const[background, setBackground] = useState<string>();
 
-  const backgrounds = [
+  const backgrounds: { id: string, image: string }[]  = [
       {id: '01d', image: clearSkyDay},
       {id: '01n', image: clearSkyNight},
       {id: '02d', image: fewCloudsDays},

@@ -137,7 +137,7 @@ interface CityListProps {
 	mobile: boolean;
 }
 
-const CityList = ({cities, handleClickCity, pageScrolled, mobile}:CityListProps) =>{
+const CityList = ({cities, handleClickCity, pageScrolled, mobile}: CityListProps) =>{
 	const items = cities.map((item, index)=> 
 		<CityItem
 			key={index}
@@ -167,7 +167,7 @@ interface CityItemProps {
 	mobile: boolean;
 }
 
-const CityItem = ({name, country, lat, lon, handleClickCity, pageScrolled, mobile}:CityItemProps) =>{
+const CityItem = ({name, country, lat, lon, handleClickCity, pageScrolled, mobile}: CityItemProps) =>{
 	const countryCode = country.toLowerCase();
 	const cityListItemClass = (pageScrolled && !mobile) ? 
 		'city-search-engine__city-list-item city-search-engine__city-list-item--scrolled' 

@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-export default function LoadingScreen({dataLoading, error, handleDataLoaded}) {
+interface LoadingScreenProps {
+	dataLoading: boolean;
+	error: boolean;
+	handleDataLoaded: (value: boolean) => boolean;
+}
+
+export default function LoadingScreen({dataLoading, error, handleDataLoaded}: LoadingScreenProps) {
   const [stateLoading, setStateLoading] = useState(true);
   const [stateError, setStateError] = useState(false);
 

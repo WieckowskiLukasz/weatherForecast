@@ -1,9 +1,8 @@
 import React, { useEffect, useState} from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import CitySearchEngine  from '../components/CitySearchEngine.tsx';
 import whiteLogo  from '../images/logo/whiteLogo.svg';
 import blackLogo  from '../images/logo/blackLogo.svg';
-import { useLocation } from 'react-router-dom';
 
 const Header = () =>{
   const [pageScrolled, setPageScrolled] = useState(false);
@@ -30,7 +29,7 @@ const Header = () =>{
     e.preventDefault();
     setMenuMobileActive(prev => !prev);
   };
-  const handleActiveMobileMenu = (value) => setMenuMobileActive(value);
+  const handleActiveMobileMenu = (value: boolean) => setMenuMobileActive(value);
   const handleNavLinkClick = () => {setMenuMobileActive(false);};
 
   const header = pageScrolled ? 
