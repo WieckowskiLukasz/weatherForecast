@@ -8,7 +8,7 @@ interface DayElementProps {
 }
 
 export default function DayElement({forecast}: DayElementProps) {
-  const forecastFourDays: any = forecast.slice(1, 5);
+  const forecastFourDays: any[] = forecast.slice(1, 5);
   let oneDay: any = {};
   let daysMainData: any[] = [];
 

@@ -60,6 +60,7 @@ export default function CitySearchEngine({propsPageScrolled, propsPageMobile, ha
 		setCityIsListActive(false);
 		setCityList(null);
 		setCityNotFound(false);
+		setError(false);
 	};
 
 	const inputClassName = (pageScrolled && !pageMobile) ? 
@@ -76,14 +77,19 @@ export default function CitySearchEngine({propsPageScrolled, propsPageMobile, ha
 	const arrowClassName = (pageScrolled && !pageMobile) ?
 		'city-search-engine__arrow city-search-engine__arrow--scrolled' 
 		: 'city-search-engine__arrow';
-	const showArrow = ((cityList && cityListIsActive) || cityNotFound) ? 
-		<div className={arrowClassName} onClick={handleClickArrow}><i className='las la-angle-double-up'></i></div> 
+	const showArrow = ((cityList && cityListIsActive) || cityNotFound || error) ? 
+		<div className={arrowClassName} onClick={()=> handleClickArrow()}><i className='las la-angle-double-up'></i></div> 
 		: null;
 	const cityNotFoundWarningClassName = (pageScrolled && !pageMobile) ? 
 		'city-search-engine__city-not-found city-search-engine__city-not-found--scrolled' 
 		: 'city-search-engine__city-not-found';
+	const cityNotFoundWarningText= (cityNotFound && !error) ? 
+	 'nie znaleziono miasta'
+		: (error) ?
+			'błąd wyszukiwania'
+			: null;
 	const cityNotFoundWarning = (cityNotFound || error) ? 
-		<div className={cityNotFoundWarningClassName}>nie znaleziono miasta</div> 
+		<div className={cityNotFoundWarningClassName}>{cityNotFoundWarningText}</div> 
 		: null;
 
 	const handleCityList = 
@@ -131,7 +137,7 @@ export default function CitySearchEngine({propsPageScrolled, propsPageMobile, ha
 
 
 interface CityListProps {
-	cities: [] | any;
+	cities: any[];
 	handleClickCity: (lat: string | number, lon: string | number, name: string) => void;
 	pageScrolled: boolean;
 	mobile: boolean;

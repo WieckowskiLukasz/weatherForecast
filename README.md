@@ -8,12 +8,14 @@ The application allows you to check the current weather conditions and a 24-hour
 
 ## Technologies
 
-The application was made in ReactJS and Saas.
+The application was made in ReactJS, TypeScript and Saas using the create-react-app environment.
 
 Libraries and solutions used:
-- [Rest API from OpenWeatherMap](https://openweathermap.org/api),
 - React Router,
 - React Context,
+- [Rest API from OpenWeatherMap](https://openweathermap.org/api),
+- [js-cookies](https://www.npmjs.com/package/js-cookies),
+- [Line Awesome](https://icons8.com/line-awesome),
 - [weather-icons](https://github.com/erikflowers/weather-icons),
 - [flag-icons](https://github.com/lipis/flag-icons).
 
