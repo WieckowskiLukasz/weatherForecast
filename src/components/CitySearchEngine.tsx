@@ -1,32 +1,25 @@
 import { AppContext } from '../AppContext.tsx';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, SyntheticEvent} from 'react';
 import { useLocation } from 'react-router-dom';
+import {CitySearchEngineInterface} from '../components/Interfaces';
+import CityList from '../components/CityList.tsx';
 
-interface CitySearchEngineProps {
-	propsPageScrolled: boolean;
-	propsPageMobile: boolean;
-	handleActiveMobileMenu: (value: boolean) => boolean;
-}
-
-export default function CitySearchEngine({propsPageScrolled, propsPageMobile, handleActiveMobileMenu}:CitySearchEngineProps) {
-	const [error, setError] = useState(false);
+export default function CitySearchEngine({propsPageScrolled, propsPageMobile, handleActiveMobileMenu}:CitySearchEngineInterface) {
+	const [error, setError] = useState<boolean>(false);
 	const [cityList, setCityList] = useState<[] | null>();
-	const [cityNotFound, setCityNotFound] = useState(false);
+	const [cityNotFound, setCityNotFound] = useState<boolean>(false);
 	const [inputValue, setInputValue] = useState<string>();
-	const [cityListIsActive, setCityIsListActive] = useState(false);
-	const [pageScrolled, setPageScrolled] = useState(false);
-	const [pageMobile, setPageMobile] = useState(false);
+	const [cityListIsActive, setCityIsListActive] = useState<boolean>(false);
+	const [pageScrolled, setPageScrolled] = useState<boolean>(false);
+	const [pageMobile, setPageMobile] = useState<boolean>(false);
 	const { setCoordinates } = useContext(AppContext);
 	const location = useLocation();
 
 	useEffect(() => {
 		if(propsPageMobile) setPageMobile(true);
 		if(pageScrolled !== propsPageScrolled) setPageScrolled(propsPageScrolled);
-	})
-	useEffect(() => {
-		setCityIsListActive(false);
-		setInputValue('');
-	},[location]);
+	});
+	useEffect(() => {setCityIsListActive(false);setInputValue('');},[location]);
 
 	const fetchData = () =>{
 		fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${inputValue}&limit=5&lang=pl&appid=22e4cc28098f4253c589877fc9e9cbd9`)
@@ -47,7 +40,7 @@ export default function CitySearchEngine({propsPageScrolled, propsPageMobile, ha
 		setCityIsListActive(true);
 	};
 
-	const handleInput = (e) => setInputValue(e.target.value);
+	const handleInput = (e: SyntheticEvent) => setInputValue((e.target as HTMLInputElement).value);
 	const handleButton = () => {if(inputValue !== '') fetchData();};
 	const handleClickCity = (lat: string | number, lon: string | number, city: string) =>{
 		setInputValue('');
@@ -78,7 +71,12 @@ export default function CitySearchEngine({propsPageScrolled, propsPageMobile, ha
 		'city-search-engine__arrow city-search-engine__arrow--scrolled' 
 		: 'city-search-engine__arrow';
 	const showArrow = ((cityList && cityListIsActive) || cityNotFound || error) ? 
-		<div className={arrowClassName} onClick={()=> handleClickArrow()}><i className='las la-angle-double-up'></i></div> 
+		<div 
+			className={arrowClassName} 
+			onClick={()=> handleClickArrow()}
+		>
+			<i className='las la-angle-double-up'></i>
+		</div>
 		: null;
 	const cityNotFoundWarningClassName = (pageScrolled && !pageMobile) ? 
 		'city-search-engine__city-not-found city-search-engine__city-not-found--scrolled' 
@@ -110,7 +108,10 @@ export default function CitySearchEngine({propsPageScrolled, propsPageMobile, ha
 
  return (
 	<div className='city-search-engine'>
-		<form className='city-search-engine__form' onSubmit={e => e.preventDefault()}>
+		<form 
+			className='city-search-engine__form' 
+			onSubmit={e => e.preventDefault()}
+		>
 			<div className='city-search-engine__input-container'>
 				<input 
 					autoComplete='off'
@@ -124,7 +125,8 @@ export default function CitySearchEngine({propsPageScrolled, propsPageMobile, ha
 				<button 
 					type='submit'
 					onClick={()=> handleButton()} 
-					className={buttonClassName}>
+					className={buttonClassName}
+				>
 					<i className='las la-search'></i>
 				</button>
 			</div>
@@ -132,67 +134,4 @@ export default function CitySearchEngine({propsPageScrolled, propsPageMobile, ha
 		</form>
 	</div>
   );
-};
-
-
-
-interface CityListProps {
-	cities: any[];
-	handleClickCity: (lat: string | number, lon: string | number, name: string) => void;
-	pageScrolled: boolean;
-	mobile: boolean;
-}
-
-const CityList = ({cities, handleClickCity, pageScrolled, mobile}: CityListProps) =>{
-	const items = cities.map((item, index)=> 
-		<CityItem
-			key={index}
-			name={item.pl ? item.pl : item.name}
-			country={item.country}
-			lat={item.lat}
-			lon={item.lon}
-			handleClickCity={handleClickCity}
-			pageScrolled={pageScrolled}
-			mobile={mobile}
-		/>
-  );
-  return (
-    <>{items}</>
-  );
-};
-
-
-
-interface CityItemProps {
-	name: string;
-	country: string;
-	lat: string | number;
-	lon: string | number;
-	handleClickCity: (lat: string | number, lon: string | number, name: string) => void;
-	pageScrolled: boolean;
-	mobile: boolean;
-}
-
-const CityItem = ({name, country, lat, lon, handleClickCity, pageScrolled, mobile}: CityItemProps) =>{
-	const countryCode = country.toLowerCase();
-	const cityListItemClass = (pageScrolled && !mobile) ? 
-		'city-search-engine__city-list-item city-search-engine__city-list-item--scrolled' 
-		: 'city-search-engine__city-list-item';
-	const countryClass = (pageScrolled && !mobile) ? 
-		'city-search-engine__country city-search-engine__country--scrolled' 
-		: 'city-search-engine__country';
-
-	return(
-		<div 
-			className={cityListItemClass}
-			onClick={()=> handleClickCity(lat, lon, name)}>
-			<div>
-					{`${name}`} 
-			</div>
-			<div className={countryClass}>
-				<div className={`fi fi-${countryCode}`}></div>
-				<div>{country}</div>
-			</div>
-		</div>
-	);
 };

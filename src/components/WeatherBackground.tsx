@@ -1,5 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { useEffect, useState} from 'react';
+import {WeatherBackgroundInterface} from '../components/Interfaces';
 import clearSkyDay from '../images/weather-backgrounds/01d.webp';
 import clearSkyNight from '../images/weather-backgrounds/01n.webp';
 import fewCloudsDays from '../images/weather-backgrounds/02d.webp';
@@ -19,8 +20,8 @@ import snowNight from '../images/weather-backgrounds/13n.webp';
 import mistDay from '../images/weather-backgrounds/50d.webp';
 import mistNight from '../images/weather-backgrounds/50n.webp';
 
-export default function WeatherBackground(props) {
-  const[backgroundID, setBackgroundID] = useState('01d');
+export default function WeatherBackground({backgroundCode}: WeatherBackgroundInterface) {
+  const[backgroundID, setBackgroundID] = useState<string>('01d');
   const[background, setBackground] = useState<string>();
 
   const backgrounds: { id: string, image: string }[]  = [
@@ -45,7 +46,7 @@ export default function WeatherBackground(props) {
   ];
 
   useEffect(()=> {
-    if(props.backgroundID !== backgroundID) setBackgroundID(props.backgroundID);
+    if(backgroundCode !== backgroundID) setBackgroundID(backgroundCode);
     const selectBackground = backgrounds.filter(background=> background.id === backgroundID);
     setBackground(selectBackground[0].image);
   });

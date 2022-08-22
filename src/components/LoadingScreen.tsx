@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import {LoadingScreenInterface} from '../components/Interfaces';
 
-interface LoadingScreenProps {
-	dataLoading: boolean;
-	error: boolean;
-	handleDataLoaded: (value: boolean) => boolean;
-}
-
-export default function LoadingScreen({dataLoading, error, handleDataLoaded}: LoadingScreenProps) {
-  const [stateLoading, setStateLoading] = useState(true);
-  const [stateError, setStateError] = useState(false);
+export default function LoadingScreen({dataLoading, error, handleDataLoaded}: LoadingScreenInterface) {
+  const [stateLoading, setStateLoading] = useState<boolean>(true);
+  const [stateError, setStateError] = useState<boolean>(false);
 
   useEffect(() =>{
     handleTimeout();

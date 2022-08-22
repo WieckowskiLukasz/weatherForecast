@@ -1,18 +1,17 @@
 import React, {useState, useEffect, useContext} from 'react';
-import DayElement from '../components/DayElement.tsx';
+import DayElements from '../components/DayElements.tsx';
 import WeatherBackground from '../components/WeatherBackground.tsx';
 import LoadingScreen from '../components/LoadingScreen.tsx';
 import { AppContext } from '../AppContext.tsx';
 import {getDayOfWeek, getHour} from '../scripts/dateFunctions.ts';
 
 export default function ForecastPage() {
-  
   const [country, setCountry] = useState<string>();
   const [fourDaysData, setFourDaysData] = useState<any[]>();
-  const { city, lat, lon } = useContext(AppContext);
-  const [error, setError] = useState(false);
-  const [dataLoading, setDataLoading] = useState(true);
+  const [error, setError] = useState<boolean>(false);
+  const [dataLoading, setDataLoading] = useState<boolean>(true);
   const [dataLoaded, setDataLoaded] = useState<boolean>();
+  const { city, lat, lon } = useContext(AppContext);
 
   const fetchData = () =>{
     fetch(`https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&lang=pl&appid=22e4cc28098f4253c589877fc9e9cbd9`)
@@ -33,7 +32,7 @@ export default function ForecastPage() {
     fetchData();
   },[lat, lon]);
 
-  const handleDataLoaded = (value) =>setDataLoaded(value);
+  const handleDataLoaded = (value: boolean) =>setDataLoaded(value);
 
   const handleDayOfWeek = (result: any[], timezone: number) =>{
     let newWeek: any[] = [];
@@ -50,7 +49,7 @@ export default function ForecastPage() {
   };
 
   const weatherBackground = !dataLoading ? 
-    <WeatherBackground backgroundID={'01d'}/> 
+    <WeatherBackground backgroundCode={'01d'}/> 
     : null;
 
   return (
@@ -68,7 +67,7 @@ export default function ForecastPage() {
             <div className={`fi fi-${country}`}></div>
             <div className='forecast-city__country'>{country}</div>
           </div>
-          <DayElement forecast={fourDaysData}/>
+          <DayElements forecast={fourDaysData}/>
         </div>
       : null}
     </>

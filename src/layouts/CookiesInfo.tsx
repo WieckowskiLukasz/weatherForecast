@@ -3,14 +3,13 @@ import cookies from 'js-cookies';
 import {cookieExpires} from '../scripts/dateFunctions.ts';
 
 export default function CookiesInfo() {
-
 	const [cookiesAccepted, setCookiesAccepted] = useState<boolean>();
 	
 	useEffect(() => {
     const info = cookies.getItem('info');
 		if(info)setCookiesAccepted(true);
 		else setCookiesAccepted(false);
-  });
+  },[]);
 
 	const handleButton = () =>{
 		document.cookie = `info=true; path=/; expires=${cookieExpires()}`;

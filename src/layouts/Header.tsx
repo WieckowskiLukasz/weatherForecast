@@ -1,18 +1,16 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState, SyntheticEvent } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import CitySearchEngine  from '../components/CitySearchEngine.tsx';
 import whiteLogo  from '../images/logo/whiteLogo.svg';
 import blackLogo  from '../images/logo/blackLogo.svg';
 
-const Header = () =>{
-  const [pageScrolled, setPageScrolled] = useState(false);
-  const [menuMobileActive, setMenuMobileActive] = useState(false);
-  const [pageMobile, setpageMobile] = useState(false);
+export default function Header() {
+  const [pageScrolled, setPageScrolled] = useState<boolean>(false);
+  const [menuMobileActive, setMenuMobileActive] = useState<boolean>(false);
+  const [pageMobile, setpageMobile] = useState<boolean>(false);
   const location = useLocation();
 
-  useEffect(() => {
-    handleWidth();
-  }, [pageMobile]);
+  useEffect(() => {handleWidth();}, [pageMobile]);
   useEffect(() => window.addEventListener('scroll', handleScroll));
   useEffect(() => window.addEventListener('resize', handleWidth));
   useEffect(() => {window.scrollTo(0,0);},[location]);
@@ -25,7 +23,7 @@ const Header = () =>{
     if(window.innerWidth < 901) setpageMobile(true);
     else {setpageMobile(false); setMenuMobileActive(false)};
   };
-  const handleHamburgerBtn = (e) =>{
+  const handleHamburgerBtn = (e: SyntheticEvent) =>{
     e.preventDefault();
     setMenuMobileActive(prev => !prev);
   };
@@ -55,7 +53,7 @@ const Header = () =>{
     'navigation__link  navigation__hamburger  navigation__hamburger--black'
     : 'navigation__link  navigation__hamburger navigation__hamburger--white';
   const citySearchEngineMobile = pageMobile ? 
-    <CitySearchEngine propsPageScrolled={pageScrolled} handleActiveMobileMenu={handleActiveMobileMenu} propsPageMobile={true}/> 
+    <CitySearchEngine propsPageScrolled={pageScrolled} handleActiveMobileMenu={handleActiveMobileMenu} propsPageMobile={true}/>
     : null;
   const citySearchEngineDesktop = pageMobile ? 
     null 
@@ -65,28 +63,35 @@ const Header = () =>{
     <div className={header}>
       <div className='header__content'>
         <div>
-          <NavLink to='/'><img src={logoSrc} alt='logo' className='logo'></img></NavLink>
+          <NavLink to='/'>
+            <img src={logoSrc} alt='logo' className='logo'></img>
+          </NavLink>
         </div>
         {citySearchEngineDesktop}
         <nav className='navigation'>
           <ul className={menuSwitch}>
             <li 
               onClick={()=> handleNavLinkClick()} 
-              className={navLink}>
-                <NavLink to='/'>Aktualna pogoda</NavLink>
+              className={navLink}
+            >
+              <NavLink to='/'>Aktualna pogoda</NavLink>
             </li>
             <li 
               onClick={()=> handleNavLinkClick()} 
-              className={navLink}>
-                <NavLink to='/prognoza'>Prognoza</NavLink>
+              className={navLink}
+            >
+              <NavLink to='/prognoza'>Prognoza</NavLink>
             </li>
             {citySearchEngineMobile}
           </ul>
         </nav>
-        <div onClick = {handleHamburgerBtn} className={hamburger}><i className={hamburgerIcon}></i></div>
+        <div 
+          onClick = {handleHamburgerBtn} 
+          className={hamburger}
+        >
+          <i className={hamburgerIcon}></i>
+        </div>
       </div>
     </div>
   );
 };
-
-export default Header;

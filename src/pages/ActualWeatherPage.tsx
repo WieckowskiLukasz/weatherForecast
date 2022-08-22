@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import WeatherIcon from '../components/WeatherIcon.tsx';
 import LoadingScreen from '../components/LoadingScreen.tsx';
 import WeatherBackground from '../components/WeatherBackground.tsx';
-import WeatherHourElements from '../components/WeatherHourElements.tsx';
+import HourElements from '../components/HourElements.tsx';
 import { AppContext } from '../AppContext.tsx';
 
 export default function ActualWeatherPage() {
@@ -15,10 +15,10 @@ export default function ActualWeatherPage() {
   const [pressure, setPressure] = useState<number>();
   const [windSpeed, setWindSpeed] = useState<number>();
   const [shortTermForecastData, setShortTermForecastData] = useState<any[]>();
-  const [weatherCode, setWeatherCode] = useState('01d');
+  const [weatherCode, setWeatherCode] = useState<string>('01d');
   const [timezone, setTimezone] = useState<number>();
-  const [error, setError] = useState(false);
-  const [dataLoading, setDataLoading] = useState(true);
+  const [error, setError] = useState<boolean>(false);
+  const [dataLoading, setDataLoading] = useState<boolean>(true);
   const [dataLoaded, setDataLoaded] = useState<boolean>();
   const { city, lat, lon } = useContext(AppContext);
 
@@ -58,10 +58,11 @@ export default function ActualWeatherPage() {
       setError(true);
     });
   };
-  const handleDataLoaded = (value) => setDataLoaded(value);
+
+  const handleDataLoaded = (value: boolean) => setDataLoaded(value);
 
   const weatherBackground = !dataLoading ? 
-    <WeatherBackground backgroundID={weatherCode}/> 
+    <WeatherBackground backgroundCode={weatherCode}/> 
     : null;
   
   return (
@@ -89,7 +90,7 @@ export default function ActualWeatherPage() {
                 </a>
               </div>
               <div className='actual-weather__temp'>
-                <WeatherIcon iconID={weatherCode}/>
+                <WeatherIcon iconCode={weatherCode}/>
                 {temp}°C
               </div>
               <div className='actual-weather__feels'>
@@ -136,7 +137,7 @@ export default function ActualWeatherPage() {
             </div>
           </div>
           <div className='short-term-forecast'>
-            <WeatherHourElements 
+            <HourElements 
               forecast={shortTermForecastData} 
               className={'short-term-forecast'}
               timezone={timezone}

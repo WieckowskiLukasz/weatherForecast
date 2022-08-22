@@ -1,4 +1,4 @@
-export const getDayOfWeek = (propsDate: number, timezone: number = 0) =>{
+  export const getDayOfWeek = (propsDate: number, timezone: number = 0) =>{
     const timestamp = propsDate + timezone + offsetUTC();
     const date = new Date(timestamp*1000);
     const days = ['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota'];
