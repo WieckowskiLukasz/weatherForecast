@@ -13,9 +13,10 @@ import {cookieExpires} from './scripts/dateFunctions.ts';
 import Page404 from './pages/Page404.tsx';
 
 function App() {
-  const[lat, setLat] = useState(defaultObject.lat);
-  const[lon, setLon] = useState(defaultObject.lon);
-  const[city, setCity] = useState(defaultObject.city);
+  const [lat, setLat] = useState(defaultObject.lat);
+  const [lon, setLon] = useState(defaultObject.lon);
+  const [city, setCity] = useState(defaultObject.city);
+  const [lang, setLang] = useState(defaultObject.lang);
   
   const setCoordinates = (lat: number | string, lon: number | string, city: string) =>{
     setLat(lat);
@@ -27,6 +28,11 @@ function App() {
     document.cookie = `city=${city}; path=/; expires=${cookieExpires()}`;
   };
 
+  const setLanguage = (lang: string) =>{
+    setLang(lang);
+    document.cookie = `lang=${lang}; path=/;`;
+  };
+
   return (
     <div className="App" >
       <HashRouter>
@@ -36,6 +42,8 @@ function App() {
             lon: lon,
             city: city,
             setCoordinates: setCoordinates,
+            lang: lang,
+            setLanguage: setLanguage,
           }}
         >
         <header>

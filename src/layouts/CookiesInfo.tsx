@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import cookies from 'js-cookies';
 import {cookieExpires} from '../scripts/dateFunctions.ts';
+import Languages from '../layouts/Languages.tsx';
 
 export default function CookiesInfo() {
 	const [cookiesAccepted, setCookiesAccepted] = useState<boolean>();
@@ -23,10 +24,10 @@ export default function CookiesInfo() {
 					<div className='info-cookies__content'>
 						<div className='info-cookies__warning'>
 							<div className='info-cookies__text'>
-								Strona korzysta z plików cookies w celu realizacji usług i zgodnie z Polityką Prywatności. Możesz określić warunki przechowywania lub dostępu do plików cookies w Twojej przeglądarce.
+								<Languages text={'cookiesInfo'}/>
 							</div>
 							<div onClick={()=> handleButton()} className='info-cookies__button'>
-								Akceptuję
+								<Languages text={'acceptButton'}/>
 							</div>
 						</div>
 					</div>

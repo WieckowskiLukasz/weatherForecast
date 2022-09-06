@@ -4,6 +4,8 @@ import LoadingScreen from '../components/LoadingScreen.tsx';
 import WeatherBackground from '../components/WeatherBackground.tsx';
 import HourElements from '../components/HourElements.tsx';
 import { AppContext } from '../AppContext.tsx';
+import Languages from '../layouts/Languages.tsx';
+import {appContextInterface} from '../components/Interfaces';
 
 export default function ActualWeatherPage() {
   const [country, setCountry] = useState<string>();
@@ -20,16 +22,16 @@ export default function ActualWeatherPage() {
   const [error, setError] = useState<boolean>(false);
   const [dataLoading, setDataLoading] = useState<boolean>(true);
   const [dataLoaded, setDataLoaded] = useState<boolean>();
-  const { city, lat, lon } = useContext(AppContext);
+  const { city, lat, lon, lang } = useContext<appContextInterface>(AppContext);
 
   useEffect(() => {
     setDataLoading(true);
     setDataLoaded(false);
     fetchData();
-  },[lat, lon]);
+  },[lat, lon, lang]);
 
   const fetchData = () =>{
-    fetch(`https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${lat}&lon=${lon}&lang=pl&appid=22e4cc28098f4253c589877fc9e9cbd9`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${lat}&lon=${lon}&lang=${lang}&appid=22e4cc28098f4253c589877fc9e9cbd9`)
     .then(res => res.json())
     .then((result) => {
       setCountry(result.sys.country.toLowerCase());
@@ -47,7 +49,7 @@ export default function ActualWeatherPage() {
       setError(true);
     });
 
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&lang=pl&appid=22e4cc28098f4253c589877fc9e9cbd9`)
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&lang=${lang}&appid=22e4cc28098f4253c589877fc9e9cbd9`)
     .then(res => res.json())
     .then((result) => {
       setTimezone(result.city.timezone);
@@ -95,7 +97,7 @@ export default function ActualWeatherPage() {
               </div>
               <div className='actual-weather__feels'>
                 <i className='wi wi-thermometer'></i>
-                Temp. odczuwalna: {feelsLike} °C
+                <Languages text={'feelsLike'}/>: {feelsLike} °C
               </div>
               <div className='actual-weather__description'>
                 {description}
@@ -104,7 +106,7 @@ export default function ActualWeatherPage() {
             <div className='actual-weather__details'>
             <div className='actual-weather__details-parameters'>
                 <div className='actual-weather__details-name'> 
-                  <i className='wi wi-cloudy'></i>Zachmurzenie: 
+                  <i className='wi wi-cloudy'></i><Languages text={'clouds'}/>: 
                 </div>
                 <div className='actual-weather__details-value'> 
                   {clouds} %
@@ -112,7 +114,7 @@ export default function ActualWeatherPage() {
               </div>
               <div className='actual-weather__details-parameters'>
                 <div className='actual-weather__details-name'> 
-                  <i className='wi wi-humidity'></i>Wilgotność: 
+                  <i className='wi wi-humidity'></i><Languages text={'humidity'}/>: 
                 </div>
                 <div className='actual-weather__details-value'> 
                   {humidity} %
@@ -120,7 +122,7 @@ export default function ActualWeatherPage() {
               </div>
               <div className='actual-weather__details-parameters'>
                 <div className='actual-weather__details-name'> 
-                  <i className='wi wi-barometer'></i>Ciśnienie: 
+                  <i className='wi wi-barometer'></i><Languages text={'pressure'}/>: 
                 </div>
                 <div className='actual-weather__details-value'> 
                   {pressure} hPa
@@ -128,7 +130,7 @@ export default function ActualWeatherPage() {
               </div>
               <div className='actual-weather__details-parameters'>
                 <div className='actual-weather__details-name'> 
-                  <i className='wi wi-strong-wind'></i>Wiatr: 
+                  <i className='wi wi-strong-wind'></i><Languages text={'wind'}/>: 
                 </div>
                 <div className='actual-weather__details-value'> 
                   {windSpeed} m/s

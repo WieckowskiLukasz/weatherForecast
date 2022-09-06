@@ -1,8 +1,9 @@
 import { AppContext } from '../AppContext.tsx';
 import React, { useEffect, useState, useContext, SyntheticEvent} from 'react';
 import { useLocation } from 'react-router-dom';
-import {CitySearchEngineInterface} from '../components/Interfaces';
+import {CitySearchEngineInterface, appContextInterface} from '../components/Interfaces';
 import CityList from '../components/CityList.tsx';
+import Languages from '../layouts/Languages.tsx';
 
 export default function CitySearchEngine({propsPageScrolled, propsPageMobile, handleActiveMobileMenu}:CitySearchEngineInterface) {
 	const [error, setError] = useState<boolean>(false);
@@ -12,7 +13,7 @@ export default function CitySearchEngine({propsPageScrolled, propsPageMobile, ha
 	const [cityListIsActive, setCityIsListActive] = useState<boolean>(false);
 	const [pageScrolled, setPageScrolled] = useState<boolean>(false);
 	const [pageMobile, setPageMobile] = useState<boolean>(false);
-	const { setCoordinates } = useContext(AppContext);
+	const { setCoordinates, lang } = useContext<appContextInterface>(AppContext);
 	const location = useLocation();
 
 	useEffect(() => {
@@ -22,7 +23,7 @@ export default function CitySearchEngine({propsPageScrolled, propsPageMobile, ha
 	useEffect(() => {setCityIsListActive(false);setInputValue('');},[location]);
 
 	const fetchData = () =>{
-		fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${inputValue}&limit=5&lang=pl&appid=22e4cc28098f4253c589877fc9e9cbd9`)
+		fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${inputValue}&limit=5&lang=${lang}&appid=22e4cc28098f4253c589877fc9e9cbd9`)
 		.then(res => res.json())
 		.then((result) => {
 			if(result.length > 0) {
@@ -82,13 +83,16 @@ export default function CitySearchEngine({propsPageScrolled, propsPageMobile, ha
 		'city-search-engine__city-not-found city-search-engine__city-not-found--scrolled' 
 		: 'city-search-engine__city-not-found';
 	const cityNotFoundWarningText= (cityNotFound && !error) ? 
-	 'nie znaleziono miasta'
+		<Languages text={'cityNotFound'}/>
 		: (error) ?
-			'błąd wyszukiwania'
+			<Languages text={'citySearchError'}/>
 			: null;
 	const cityNotFoundWarning = (cityNotFound || error) ? 
 		<div className={cityNotFoundWarningClassName}>{cityNotFoundWarningText}</div> 
 		: null;
+	const cityInputPlaceholder = (lang === 'pl') ?
+		'Podaj miasto...'
+		: 'Enter the city...';
 
 	const handleCityList = 
 		(cityList && cityListIsActive) ?
@@ -118,7 +122,7 @@ export default function CitySearchEngine({propsPageScrolled, propsPageMobile, ha
 					name='city'
 					list='cities'
 					className={inputClassName} 
-					placeholder='Podaj miasto...' 
+					placeholder={cityInputPlaceholder}
 					value={inputValue} 
 					onChange={handleInput}
 				/>

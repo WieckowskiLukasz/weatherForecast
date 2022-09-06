@@ -4,6 +4,8 @@ import WeatherBackground from '../components/WeatherBackground.tsx';
 import LoadingScreen from '../components/LoadingScreen.tsx';
 import { AppContext } from '../AppContext.tsx';
 import {getDayOfWeek, getHour} from '../scripts/dateFunctions.ts';
+import Languages from '../layouts/Languages.tsx';
+import {appContextInterface} from '../components/Interfaces';
 
 export default function ForecastPage() {
   const [country, setCountry] = useState<string>();
@@ -11,10 +13,10 @@ export default function ForecastPage() {
   const [error, setError] = useState<boolean>(false);
   const [dataLoading, setDataLoading] = useState<boolean>(true);
   const [dataLoaded, setDataLoaded] = useState<boolean>();
-  const { city, lat, lon } = useContext(AppContext);
+  const { city, lat, lon, lang } = useContext<appContextInterface>(AppContext);
 
   const fetchData = () =>{
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&lang=pl&appid=22e4cc28098f4253c589877fc9e9cbd9`)
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&lang=${lang}&appid=22e4cc28098f4253c589877fc9e9cbd9`)
       .then(res => res.json())
       .then((result) => {
         setCountry(result.city.country.toLowerCase());
@@ -30,7 +32,7 @@ export default function ForecastPage() {
     setDataLoading(true);
     setDataLoaded(false);
     fetchData();
-  },[lat, lon]);
+  },[lat, lon, lang]);
 
   const handleDataLoaded = (value: boolean) =>setDataLoaded(value);
 
@@ -40,7 +42,7 @@ export default function ForecastPage() {
     result.forEach(item => {
       let timestamp: number = item.dt + timezone;
       let hour: string = getHour(timestamp);
-      item.day = getDayOfWeek(timestamp);
+      item.day = getDayOfWeek(timestamp, null, lang);
       item.dt = timestamp;
       newDay.push(item);
       if(hour === '21:00'|| hour === '22:00' || hour === '23:00'){newWeek.push(newDay); newDay = [];}
@@ -63,7 +65,7 @@ export default function ForecastPage() {
       {dataLoaded ? 
         <div className='forecast-container'>
           <div className='forecast-city'>
-            <div className='forecast-city__city-name'>Prognoza: {city}</div>
+            <div className='forecast-city__city-name'><Languages text={'forecast'}/>: {city}</div>
             <div className={`fi fi-${country}`}></div>
             <div className='forecast-city__country'>{country}</div>
           </div>

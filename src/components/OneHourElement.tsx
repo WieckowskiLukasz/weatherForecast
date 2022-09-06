@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {getDayOfWeek, getHour} from '../scripts/dateFunctions.ts';
-import {OneHourElementInterface} from '../components/Interfaces';
+import {OneHourElementInterface, appContextInterface} from '../components/Interfaces';
+import { AppContext } from '../AppContext.tsx';
+import Languages from '../layouts/Languages.tsx';
 
 export default function OneHourElement ({date, temp, description, icon, feelsLike, clouds, humidity, pressure, windSpeed, className, timezone}: OneHourElementInterface) {
   const[moreInfoActive, setMoreInfoActive] = useState(false);
+  const { lang } = useContext<appContextInterface>(AppContext);
   
   const handleClick = () => setMoreInfoActive(prev => !prev);
 
@@ -11,23 +14,23 @@ export default function OneHourElement ({date, temp, description, icon, feelsLik
     return(
       <div className={`${className}__more-info`}><hr></hr>
       <div className={`${className}__more-info-parameters`}>
-        <div className={`${className}__parameter`}>Odczuwalna: </div>
+        <div className={`${className}__parameter`}><Languages text={'feelsLike'}/>: </div>
         <div className={`${className}__value`}>{Math.floor(feelsLike)} °C</div>
       </div>
       <div className={`${className}__more-info-parameters`}>
-        <div className={`${className}__parameter`}>Zachmurzenie: </div>
+        <div className={`${className}__parameter`}><Languages text={'clouds'}/>: </div>
         <div className={`${className}__value`}>{clouds} %</div>
       </div>
       <div className={`${className}__more-info-parameters`}>
-        <div className={`${className}__parameter`}>Wilgotność: </div> 
+        <div className={`${className}__parameter`}><Languages text={'humidity'}/>: </div> 
         <div className={`${className}__value`}>{humidity} %</div>
       </div>
       <div className={`${className}__more-info-parameters`}>
-        <div className={`${className}__parameter`}>Ciśnienie: </div> 
+        <div className={`${className}__parameter`}><Languages text={'pressure'}/>: </div> 
         <div className={`${className}__value`}>{pressure} hPa</div>
       </div>
       <div className={`${className}__more-info-parameters`}>
-        <div className={`${className}__parameter`}>Wiatr: </div> 
+        <div className={`${className}__parameter`}><Languages text={'wind'}/>: </div> 
         <div className={`${className}__value`}>{windSpeed} m/s</div>
       </div>
     </div>
@@ -49,10 +52,10 @@ export default function OneHourElement ({date, temp, description, icon, feelsLik
   const hour = getHour(date, timezone);
 
   const Day = () =>{
-    const day: string = getDayOfWeek(date, timezone);
+    const day: string = getDayOfWeek(date, timezone, lang);
     let colorDay : string = '';
-    if(day === 'Sobota') colorDay = 'dimgray';
-    else if(day === 'Niedziela') colorDay = '#f54254';
+    if(day === 'Sobota' || day === 'Saturday') colorDay = 'dimgray';
+    else if(day === 'Niedziela' || day === 'Sunday') colorDay = '#f54254';
     
     return(
       <div className={`${className}__day`} style={{color:colorDay}}>

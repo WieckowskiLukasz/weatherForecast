@@ -20,7 +20,7 @@
   }
   &__content{
     width: 100vw;
-    max-width: 2500px;
+    max-width: 2560px;
     height: 60px;
     justify-content: space-between;
     display: flex;
@@ -87,8 +87,7 @@
   }
   &__link{
     z-index: 2;
-    min-width: 70px;
-    list-style:none;
+    list-style: none;
     font-size: 1.125rem;
     text-transform: uppercase;
     padding: 15px;
@@ -131,7 +130,16 @@
         display: block;
         min-width: 100%;
       }
-    }        
+    }
+    img{
+      cursor: pointer;
+      width: 25px;
+      filter: brightness(90%) saturate(70%);
+      transition: .3s all;
+      &:hover{
+        filter: brightness(100%) saturate(100%);
+      }
+    }         
   }
   &__hamburger{
     position: absolute;

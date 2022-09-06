@@ -85,6 +85,26 @@ interface daysMainDataInterface {
   wind: number;
 };
 
+interface LanguagesInterface {
+	text: string;
+};
+
+interface appContextDefaultObjectInterface { 
+  lat: number | string;
+  lon: number | string;
+  city: string;
+  lang: string;
+}; 
+
+interface appContextInterface { 
+  lat: number | string;
+  lon: number | string;
+  city: string;
+  lang: string;
+  setCoordinates: (lat: number | string, lon: number | string, city: string) => void;
+  setLanguage: (lang: string) => void;
+};
+
 export{
   CitySearchEngineInterface,
   CityListInterface,
@@ -97,4 +117,7 @@ export{
   WeatherHourElementsInterface,
   WeatherIconInterface,
 	daysMainDataInterface,
+  LanguagesInterface,
+  appContextDefaultObjectInterface,
+  appContextInterface,
 };

@@ -1,7 +1,13 @@
-  export const getDayOfWeek = (propsDate: number, timezone: number = 0) =>{
+  export const getDayOfWeek = (propsDate: number, timezone: number = 0, lang: string) =>{
     const timestamp = propsDate + timezone + offsetUTC();
     const date = new Date(timestamp*1000);
-    const days = ['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota'];
+    let days;
+    if(lang === 'pl'){
+      days = ['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota']
+    }
+    else if(lang === 'en'){
+      days = ['Sunday','Monday','Thuesday','Wednesday','Thursday','Friday','Saturday']
+    }
     const dayOfWeek = days[date.getDay()];
     return(dayOfWeek);
   };

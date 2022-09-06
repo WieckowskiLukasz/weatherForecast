@@ -2,6 +2,7 @@ import React from 'react';
 import HourElements from '../components/HourElements.tsx';
 import WeatherIcon from '../components/WeatherIcon.tsx';
 import {OneDayElementInterface} from '../components/Interfaces';
+import Languages from '../layouts/Languages.tsx';
 
 export default function OneDayElement({day, date, temp, feelsLike, icon, description, clouds, humidity, pressure, wind, oneDayForeceast}: OneDayElementInterface) {
   return (
@@ -20,7 +21,7 @@ export default function OneDayElement({day, date, temp, feelsLike, icon, descrip
             </div>
           <div className='day-forecast__feels'>
             <i className='wi wi-thermometer'></i>
-            odczuwalna: {feelsLike} °C
+            <Languages text={'feelsLike'}/>: {feelsLike} °C
           </div>
           <div className='day-forecast__day-description'>
             {description}
@@ -30,7 +31,7 @@ export default function OneDayElement({day, date, temp, feelsLike, icon, descrip
           <div className='day-forecast__details-parameters'>
             <div className='day-forecast__details-name'> 
               <i className='wi wi-cloudy'></i>
-              Zachmurzenie: 
+              <Languages text={'clouds'}/>: 
             </div>
             <div className='day-forecast__details-value'> 
               {clouds} %
@@ -39,7 +40,7 @@ export default function OneDayElement({day, date, temp, feelsLike, icon, descrip
           <div className='day-forecast__details-parameters'>
             <div className='day-forecast__details-name'> 
               <i className='wi wi-humidity'></i>
-              Wilgotność: 
+              <Languages text={'humidity'}/>: 
             </div>
             <div className='day-forecast__details-value'> 
               {humidity} %
@@ -48,7 +49,7 @@ export default function OneDayElement({day, date, temp, feelsLike, icon, descrip
           <div className='day-forecast__details-parameters'>
             <div className='day-forecast__details-name'> 
               <i className='wi wi-barometer'></i>
-              Ciśnienie: 
+              <Languages text={'pressure'}/>: 
             </div>
             <div className='day-forecast__details-value'> 
               {pressure} hPa
@@ -57,7 +58,7 @@ export default function OneDayElement({day, date, temp, feelsLike, icon, descrip
           <div className='day-forecast__details-parameters'>
             <div className='day-forecast_details-name'> 
               <i className='wi wi-strong-wind'></i>
-              Wiatr: 
+              <Languages text={'wind'}/>: 
             </div>
             <div className='day-forecast__details-value'> 
               {wind} m/s
