@@ -1,6 +1,7 @@
 import React, { useEffect, useState, SyntheticEvent, useLayoutEffect, useContext } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import CitySearchEngine  from '../components/CitySearchEngine.tsx';
+import Settings  from '../layouts/Settings.tsx';
 import whiteLogo  from '../images/logo/whiteLogo.svg';
 import blackLogo  from '../images/logo/blackLogo.svg';
 import pl from '../flags/pl.svg';
@@ -12,6 +13,7 @@ import {appContextInterface} from '../components/Interfaces';
 export default function Header() {
   const [pageScrolled, setPageScrolled] = useState<boolean>(false);
   const [menuMobileActive, setMenuMobileActive] = useState<boolean>(false);
+  const [settingsActive, setSettingsActive] = useState<boolean>(false);
   const [pageMobile, setpageMobile] = useState<boolean>(false);
   const location = useLocation();
   const {lang, setLanguage} = useContext<appContextInterface>(AppContext);
@@ -33,12 +35,9 @@ export default function Header() {
     e.preventDefault();
     setMenuMobileActive(prev => !prev);
   };
-  const handleLangBtn = () =>{
-    if(lang === 'en') setLanguage('pl');
-    else setLanguage('en');
-  };
   const handleActiveMobileMenu = (value: boolean) => setMenuMobileActive(value);
   const handleNavLinkClick = () => {setMenuMobileActive(false);};
+  const handleSettings = () => {setSettingsActive(prev => !prev);};
 
   const header = pageScrolled ? 
     'header header--scrolled' 
@@ -62,54 +61,61 @@ export default function Header() {
   const hamburger = pageScrolled ? 
     'navigation__link  navigation__hamburger  navigation__hamburger--black'
     : 'navigation__link  navigation__hamburger navigation__hamburger--white';
-  const flagIcon = lang === 'en' ? 
-  pl
-  : en;
+  const setupIcon = pageScrolled ? 
+    'las la-cog setup-icon setup-icon--black'
+    : 'las la-cog setup-icon setup-icon--white';
+
   const citySearchEngineMobile = pageMobile ? 
     <CitySearchEngine propsPageScrolled={pageScrolled} handleActiveMobileMenu={handleActiveMobileMenu} propsPageMobile={true}/>
     : null;
   const citySearchEngineDesktop = pageMobile ? 
     null 
     : <CitySearchEngine propsPageScrolled={pageScrolled}/>;
+  const settings = settingsActive ? 
+    <Settings/> 
+    : null;
   
   return(
-    <div className={header}>
-      <div className='header__content'>
-        <div>
-          <NavLink to='/'>
-            <img src={logoSrc} alt='logo' className='logo'></img>
-          </NavLink>
-        </div>
-        {citySearchEngineDesktop}
-        <nav className='navigation'>
-          <ul className={menuSwitch}>
-            <li 
-              onClick={()=> handleNavLinkClick()} 
-              className={navLink}
-            >
-              <NavLink to='/'><Languages text={'actualWeatherNavLink'}/></NavLink>
-            </li>
-            <li 
-              onClick={()=> handleNavLinkClick()} 
-              className={navLink}
-            >
-              <NavLink to='/prognoza'><Languages text={'forecastNavLink'}/></NavLink>
-            </li>
-            <li 
-              onClick={()=> handleLangBtn()} 
-              className={navLink}>
-                <img src={flagIcon} alt='flag'/>
-            </li>
-            {citySearchEngineMobile}
-          </ul>
-        </nav>
-        <div 
-          onClick = {handleHamburgerBtn} 
-          className={hamburger}
-        >
-          <i className={hamburgerIcon}></i>
+    <>
+      <div className={header}>
+        {settings}
+        <div className='header__content'>
+          <div>
+            <NavLink to='/'>
+              <img src={logoSrc} alt='logo' className='logo'></img>
+            </NavLink>
+          </div>
+          {citySearchEngineDesktop}
+          <nav className='navigation'>
+            <ul className={menuSwitch}>
+              <li 
+                onClick={()=> handleNavLinkClick()} 
+                className={navLink}
+              >
+                <NavLink to='/'><Languages text={'actualWeatherNavLink'}/></NavLink>
+              </li>
+              <li 
+                onClick={()=> handleNavLinkClick()} 
+                className={navLink}
+              >
+                <NavLink to='/prognoza'><Languages text={'forecastNavLink'}/></NavLink>
+              </li>
+              <li 
+                onClick={()=> handleSettings()} 
+                className={navLink}>
+                <i className={setupIcon}></i>
+              </li> 
+              {citySearchEngineMobile}
+            </ul>
+          </nav>
+          <div 
+            onClick = {handleHamburgerBtn} 
+            className={hamburger}
+          >
+            <i className={hamburgerIcon}></i>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };

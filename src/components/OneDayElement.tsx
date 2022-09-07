@@ -3,6 +3,7 @@ import HourElements from '../components/HourElements.tsx';
 import WeatherIcon from '../components/WeatherIcon.tsx';
 import {OneDayElementInterface} from '../components/Interfaces';
 import Languages from '../layouts/Languages.tsx';
+import Units from '../layouts/Units.tsx';
 
 export default function OneDayElement({day, date, temp, feelsLike, icon, description, clouds, humidity, pressure, wind, oneDayForeceast}: OneDayElementInterface) {
   return (
@@ -17,11 +18,11 @@ export default function OneDayElement({day, date, temp, feelsLike, icon, descrip
             </div>
             <div className='day-forecast__day-temp'>
               <WeatherIcon iconCode={icon}/>
-              {temp}°C
+              {temp} <Units text={'temp'}/>
             </div>
           <div className='day-forecast__feels'>
             <i className='wi wi-thermometer'></i>
-            <Languages text={'feelsLike'}/>: {feelsLike} °C
+            <Languages text={'feelsLike'}/>: {feelsLike} <Units text={'temp'}/>
           </div>
           <div className='day-forecast__day-description'>
             {description}
@@ -61,7 +62,7 @@ export default function OneDayElement({day, date, temp, feelsLike, icon, descrip
               <Languages text={'wind'}/>: 
             </div>
             <div className='day-forecast__details-value'> 
-              {wind} m/s
+              {wind} <Units text={'wind'}/>
             </div>
           </div>
         </div>

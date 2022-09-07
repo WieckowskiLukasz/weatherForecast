@@ -13,10 +13,10 @@ export default function ForecastPage() {
   const [error, setError] = useState<boolean>(false);
   const [dataLoading, setDataLoading] = useState<boolean>(true);
   const [dataLoaded, setDataLoaded] = useState<boolean>();
-  const { city, lat, lon, lang } = useContext<appContextInterface>(AppContext);
+  const { city, lat, lon, lang, unit } = useContext<appContextInterface>(AppContext);
 
   const fetchData = () =>{
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&lang=${lang}&appid=22e4cc28098f4253c589877fc9e9cbd9`)
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?units=${unit}&lat=${lat}&lon=${lon}&lang=${lang}&appid=22e4cc28098f4253c589877fc9e9cbd9`)
       .then(res => res.json())
       .then((result) => {
         setCountry(result.city.country.toLowerCase());
@@ -32,7 +32,7 @@ export default function ForecastPage() {
     setDataLoading(true);
     setDataLoaded(false);
     fetchData();
-  },[lat, lon, lang]);
+  },[lat, lon, lang, unit]);
 
   const handleDataLoaded = (value: boolean) =>setDataLoaded(value);
 

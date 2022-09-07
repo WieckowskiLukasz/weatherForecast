@@ -17,6 +17,7 @@ function App() {
   const [lon, setLon] = useState(defaultObject.lon);
   const [city, setCity] = useState(defaultObject.city);
   const [lang, setLang] = useState(defaultObject.lang);
+  const [unit, setUnit] = useState(defaultObject.unit);
   
   const setCoordinates = (lat: number | string, lon: number | string, city: string) =>{
     setLat(lat);
@@ -30,7 +31,12 @@ function App() {
 
   const setLanguage = (lang: string) =>{
     setLang(lang);
-    document.cookie = `lang=${lang}; path=/;`;
+    document.cookie = `lang=${lang}; path=/; expires=${cookieExpires()}`;
+  };
+
+  const setUnits = (unit: string) =>{
+    setUnit(unit);
+    document.cookie = `unit=${unit}; path=/; expires=${cookieExpires()}`;
   };
 
   return (
@@ -44,6 +50,8 @@ function App() {
             setCoordinates: setCoordinates,
             lang: lang,
             setLanguage: setLanguage,
+            unit: unit,
+            setUnits: setUnits,
           }}
         >
         <header>

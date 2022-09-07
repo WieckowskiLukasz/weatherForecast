@@ -5,6 +5,7 @@ import WeatherBackground from '../components/WeatherBackground.tsx';
 import HourElements from '../components/HourElements.tsx';
 import { AppContext } from '../AppContext.tsx';
 import Languages from '../layouts/Languages.tsx';
+import Units from '../layouts/Units.tsx';
 import {appContextInterface} from '../components/Interfaces';
 
 export default function ActualWeatherPage() {
@@ -22,16 +23,16 @@ export default function ActualWeatherPage() {
   const [error, setError] = useState<boolean>(false);
   const [dataLoading, setDataLoading] = useState<boolean>(true);
   const [dataLoaded, setDataLoaded] = useState<boolean>();
-  const { city, lat, lon, lang } = useContext<appContextInterface>(AppContext);
+  const { city, lat, lon, lang, unit } = useContext<appContextInterface>(AppContext);
 
   useEffect(() => {
     setDataLoading(true);
     setDataLoaded(false);
     fetchData();
-  },[lat, lon, lang]);
+  },[lat, lon, lang, unit]);
 
   const fetchData = () =>{
-    fetch(`https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${lat}&lon=${lon}&lang=${lang}&appid=22e4cc28098f4253c589877fc9e9cbd9`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?units=${unit}&lat=${lat}&lon=${lon}&lang=${lang}&appid=22e4cc28098f4253c589877fc9e9cbd9`)
     .then(res => res.json())
     .then((result) => {
       setCountry(result.sys.country.toLowerCase());
@@ -49,7 +50,7 @@ export default function ActualWeatherPage() {
       setError(true);
     });
 
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&lang=${lang}&appid=22e4cc28098f4253c589877fc9e9cbd9`)
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?units=${unit}&lat=${lat}&lon=${lon}&lang=${lang}&appid=22e4cc28098f4253c589877fc9e9cbd9`)
     .then(res => res.json())
     .then((result) => {
       setTimezone(result.city.timezone);
@@ -93,11 +94,11 @@ export default function ActualWeatherPage() {
               </div>
               <div className='actual-weather__temp'>
                 <WeatherIcon iconCode={weatherCode}/>
-                {temp}°C
+                {temp}<Units text={'temp'}/>
               </div>
               <div className='actual-weather__feels'>
                 <i className='wi wi-thermometer'></i>
-                <Languages text={'feelsLike'}/>: {feelsLike} °C
+                <Languages text={'feelsLike'}/>: {feelsLike} <Units text={'temp'}/>
               </div>
               <div className='actual-weather__description'>
                 {description}
@@ -133,7 +134,7 @@ export default function ActualWeatherPage() {
                   <i className='wi wi-strong-wind'></i><Languages text={'wind'}/>: 
                 </div>
                 <div className='actual-weather__details-value'> 
-                  {windSpeed} m/s
+                  {windSpeed} <Units text={'wind'}/>
                 </div>
               </div>
             </div>

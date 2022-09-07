@@ -3,6 +3,7 @@ import {getDayOfWeek, getHour} from '../scripts/dateFunctions.ts';
 import {OneHourElementInterface, appContextInterface} from '../components/Interfaces';
 import { AppContext } from '../AppContext.tsx';
 import Languages from '../layouts/Languages.tsx';
+import Units from '../layouts/Units.tsx';
 
 export default function OneHourElement ({date, temp, description, icon, feelsLike, clouds, humidity, pressure, windSpeed, className, timezone}: OneHourElementInterface) {
   const[moreInfoActive, setMoreInfoActive] = useState(false);
@@ -15,7 +16,7 @@ export default function OneHourElement ({date, temp, description, icon, feelsLik
       <div className={`${className}__more-info`}><hr></hr>
       <div className={`${className}__more-info-parameters`}>
         <div className={`${className}__parameter`}><Languages text={'feelsLike'}/>: </div>
-        <div className={`${className}__value`}>{Math.floor(feelsLike)} °C</div>
+        <div className={`${className}__value`}>{Math.floor(feelsLike)} <Units text={'temp'}/></div>
       </div>
       <div className={`${className}__more-info-parameters`}>
         <div className={`${className}__parameter`}><Languages text={'clouds'}/>: </div>
@@ -31,7 +32,7 @@ export default function OneHourElement ({date, temp, description, icon, feelsLik
       </div>
       <div className={`${className}__more-info-parameters`}>
         <div className={`${className}__parameter`}><Languages text={'wind'}/>: </div> 
-        <div className={`${className}__value`}>{windSpeed} m/s</div>
+        <div className={`${className}__value`}>{windSpeed} <Units text={'wind'}/></div>
       </div>
     </div>
     );
@@ -77,7 +78,7 @@ export default function OneHourElement ({date, temp, description, icon, feelsLik
         <div className={`${className}__temp-container`}>
           {icon}
           <div className={`${className}__temp`}>
-            {Math.floor(temp)}°C
+            {Math.floor(temp)}<Units text={'temp'}/>
           </div>
         </div>
         <div className={`${className}__description`}>

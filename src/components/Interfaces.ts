@@ -94,6 +94,7 @@ interface appContextDefaultObjectInterface {
   lon: number | string;
   city: string;
   lang: string;
+  unit: string;
 }; 
 
 interface appContextInterface { 
@@ -101,8 +102,10 @@ interface appContextInterface {
   lon: number | string;
   city: string;
   lang: string;
+  unit: string;
   setCoordinates: (lat: number | string, lon: number | string, city: string) => void;
   setLanguage: (lang: string) => void;
+  setUnits: (unit: string) => void;
 };
 
 export{
