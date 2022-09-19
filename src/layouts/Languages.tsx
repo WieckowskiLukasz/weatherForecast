@@ -12,7 +12,7 @@ export default function Languages({text}: LanguagesInterface) {
       citySearchEnginePlaceholder: 'Podaj miasto...',
       cityNotFound: 'nie znaleziono miasta',
       citySearchError: 'błąd wyszukiwania',
-      feelsLike: 'Temp. odczuwalna',
+      feelsLike: 'Odczuwalna',
       clouds: 'Zachmurzenie',
       humidity: 'Wilgotność',
       pressure: 'Ciśnienie',
@@ -46,5 +46,5 @@ export default function Languages({text}: LanguagesInterface) {
     <>
       {textArray[lang][text]}
     </>
-  )
-}
+  );
+};

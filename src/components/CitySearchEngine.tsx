@@ -5,21 +5,15 @@ import {CitySearchEngineInterface, appContextInterface} from '../components/Inte
 import CityList from '../components/CityList.tsx';
 import Languages from '../layouts/Languages.tsx';
 
-export default function CitySearchEngine({propsPageScrolled, propsPageMobile, handleActiveMobileMenu}:CitySearchEngineInterface) {
+export default function CitySearchEngine({pageScrolled, pageMobile, handleActiveMobileMenu}:CitySearchEngineInterface) {
 	const [error, setError] = useState<boolean>(false);
 	const [cityList, setCityList] = useState<[] | null>();
 	const [cityNotFound, setCityNotFound] = useState<boolean>(false);
 	const [inputValue, setInputValue] = useState<string>();
 	const [cityListIsActive, setCityIsListActive] = useState<boolean>(false);
-	const [pageScrolled, setPageScrolled] = useState<boolean>(false);
-	const [pageMobile, setPageMobile] = useState<boolean>(false);
 	const { setCoordinates, lang } = useContext<appContextInterface>(AppContext);
 	const location = useLocation();
 
-	useEffect(() => {
-		if(propsPageMobile) setPageMobile(true);
-		if(pageScrolled !== propsPageScrolled) setPageScrolled(propsPageScrolled);
-	});
 	useEffect(() => {setCityIsListActive(false);setInputValue('');},[location]);
 
 	const fetchData = () =>{

@@ -1,6 +1,6 @@
 interface CitySearchEngineInterface {
-	propsPageScrolled: boolean;
-	propsPageMobile: boolean;
+	pageScrolled: boolean;
+	pageMobile: boolean;
 	handleActiveMobileMenu: (value: boolean) => boolean;
 };
 

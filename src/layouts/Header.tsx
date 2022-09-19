@@ -1,14 +1,10 @@
-import React, { useEffect, useState, SyntheticEvent, useLayoutEffect, useContext } from 'react';
+import React, { useEffect, useState, SyntheticEvent, useLayoutEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import CitySearchEngine  from '../components/CitySearchEngine.tsx';
 import Settings  from '../layouts/Settings.tsx';
 import whiteLogo  from '../images/logo/whiteLogo.svg';
 import blackLogo  from '../images/logo/blackLogo.svg';
-import pl from '../flags/pl.svg';
-import en from '../flags/en.svg';
 import Languages from '../layouts/Languages.tsx';
-import { AppContext } from '../AppContext.tsx';
-import {appContextInterface} from '../components/Interfaces';
 
 export default function Header() {
   const [pageScrolled, setPageScrolled] = useState<boolean>(false);
@@ -16,12 +12,11 @@ export default function Header() {
   const [settingsActive, setSettingsActive] = useState<boolean>(false);
   const [pageMobile, setpageMobile] = useState<boolean>(false);
   const location = useLocation();
-  const {lang, setLanguage} = useContext<appContextInterface>(AppContext);
 
   useLayoutEffect(() => {handleWidth();}, [pageMobile]);
   useEffect(() => window.addEventListener('scroll', handleScroll));
   useEffect(() => window.addEventListener('resize', handleWidth));
-  useEffect(() => {window.scrollTo(0,0);},[location]);
+  useEffect(() => {window.scrollTo(0,0); setSettingsActive(false)},[location]);
 
   const handleScroll = () =>{
     if(window.scrollY > 50) setPageScrolled(true);
@@ -34,53 +29,56 @@ export default function Header() {
   const handleHamburgerBtn = (e: SyntheticEvent) =>{
     e.preventDefault();
     setMenuMobileActive(prev => !prev);
+    setSettingsActive(false);
   };
   const handleActiveMobileMenu = (value: boolean) => setMenuMobileActive(value);
   const handleNavLinkClick = () => {setMenuMobileActive(false);};
-  const handleSettings = () => {setSettingsActive(prev => !prev);};
+  const handleSettings = () => {setSettingsActive(prev => !prev);setMenuMobileActive(false)};
 
-  const header = pageScrolled ? 
-    'header header--scrolled' 
-    : 'header';
   const logoSrc = pageScrolled ?
     blackLogo 
     : whiteLogo;
-  const navLink = (pageScrolled && !pageMobile) ? 
-    'navigation__link navigation__link--scrolled' 
-    : pageMobile ? 
-      'navigation__link navigation__link--mobile' 
-      : 'navigation__link ';
+  const hamburgerIcon = menuMobileActive ? 
+    'las la-times'
+    : 'las la-bars';
   const menuSwitch = pageMobile ? 
     menuMobileActive ? 
       'navigation__links  navigation__links--mobile navigation__links--active'
       : 'navigation__links  navigation__links--mobile'
     : 'navigation__links';
-  const hamburgerIcon = menuMobileActive ? 
-    'las la-times'
-    : 'las la-bars';
-  const hamburger = pageScrolled ? 
-    'navigation__link  navigation__hamburger  navigation__hamburger--black'
-    : 'navigation__link  navigation__hamburger navigation__hamburger--white';
-  const setupIcon = pageScrolled ? 
-    'las la-cog setup-icon setup-icon--black'
-    : 'las la-cog setup-icon setup-icon--white';
+  const headerClassName = pageScrolled ? 
+    'header header--scrolled'
+    : 'header';
+  const navLinkClassName = (pageScrolled && !pageMobile) ? 
+    'navigation__link navigation__link--scrolled' 
+    : pageMobile ? 
+      'navigation__link navigation__link--mobile' 
+      : 'navigation__link ';
+  const hamburgerClassName = pageScrolled ? 
+    'navigation__link  navigation__hamburger  navigation__hamburger--scrolled'
+    : 'navigation__link  navigation__hamburger';
+  const setupIconClassName = pageScrolled ? 
+    'navigation__link navigation__setup-icon navigation__setup-icon--scrolled'
+    : 'navigation__link navigation__setup-icon';
 
   const citySearchEngineMobile = pageMobile ? 
-    <CitySearchEngine propsPageScrolled={pageScrolled} handleActiveMobileMenu={handleActiveMobileMenu} propsPageMobile={true}/>
+    <CitySearchEngine pageScrolled={pageScrolled} handleActiveMobileMenu={handleActiveMobileMenu} pageMobile={true}/>
     : null;
   const citySearchEngineDesktop = pageMobile ? 
     null 
-    : <CitySearchEngine propsPageScrolled={pageScrolled}/>;
+    : <CitySearchEngine pageScrolled={pageScrolled}/>;
   const settings = settingsActive ? 
-    <Settings/> 
+    <Settings pageScrolled={pageScrolled}/> 
     : null;
   
   return(
     <>
-      <div className={header}>
+      <div className={headerClassName}>
         {settings}
         <div className='header__content'>
-          <div>
+          <div 
+            onClick={()=> handleNavLinkClick()}
+          >
             <NavLink to='/'>
               <img src={logoSrc} alt='logo' className='logo'></img>
             </NavLink>
@@ -90,27 +88,28 @@ export default function Header() {
             <ul className={menuSwitch}>
               <li 
                 onClick={()=> handleNavLinkClick()} 
-                className={navLink}
+                className={navLinkClassName}
               >
                 <NavLink to='/'><Languages text={'actualWeatherNavLink'}/></NavLink>
               </li>
               <li 
                 onClick={()=> handleNavLinkClick()} 
-                className={navLink}
+                className={navLinkClassName}
               >
                 <NavLink to='/prognoza'><Languages text={'forecastNavLink'}/></NavLink>
               </li>
-              <li 
-                onClick={()=> handleSettings()} 
-                className={navLink}>
-                <i className={setupIcon}></i>
-              </li> 
               {citySearchEngineMobile}
             </ul>
           </nav>
           <div 
+            onClick={()=> handleSettings()} 
+            className={setupIconClassName}
+          >
+            <i className='las la-cog '></i>
+          </div> 
+          <div 
             onClick = {handleHamburgerBtn} 
-            className={hamburger}
+            className={hamburgerClassName}
           >
             <i className={hamburgerIcon}></i>
           </div>
